@@ -18,7 +18,8 @@ export default class UserController {
     async getUsers(ctx, next) {
         const users = await getAllUsers()
         ctx.body = {
-            users
+            users,
+            success:true
         }
     }
     @Post("/register")
@@ -38,7 +39,7 @@ export default class UserController {
         }
     }
     @Post("/login")
-    async register(ctx, next) {
+    async login(ctx, next) {
         const {
             username,
             password

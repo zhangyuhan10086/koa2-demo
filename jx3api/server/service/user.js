@@ -39,7 +39,6 @@ export async function checkPassword(username, password) {
     if (user) {
         //match = await user.comparePassword(password, user.password)
         match=true;
-        console.log( user )
     }
 
     return {

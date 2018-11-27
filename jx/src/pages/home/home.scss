@@ -1,3 +1,4 @@
+@import "../../scss/common.scss";
 .home_page {
     .home_header {
         height: 100px;
@@ -11,10 +12,22 @@
         background: #21243a;
     }
     .shuoshuo_wrap {
-        margin-top:10px;
-        height: 500px;
-        text-align: center;
-        line-height: 100px;
         background: #21243a;
+        .shuoshuo_list {
+            padding: 0 25px;
+            color: $white;
+        }
+        .shuoshuo_item {
+            display: flex;
+            .publisher {
+                flex-shrink: 0;
+                width: 80px;
+            }
+            .publisher_name{
+                font-size: 14px;
+                line-height: 25px;
+                font-weight: 700;
+            }
+        }
     }
 }

@@ -50,7 +50,7 @@ class Discover extends React.Component {
         )
     }
     async componentWillMount() {
-        const res = await _axios("get", "http://localhost:4455/api/user/all", {});
+        const res = await _axios("get", "/api/user/all", {});
         try {
             if (res.success) {
                 let { users: userList } = res;

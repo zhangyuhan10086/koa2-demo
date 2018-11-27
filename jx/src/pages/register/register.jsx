@@ -17,7 +17,7 @@ class registerForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                let res = await _axios("post", "http://localhost:4455/api/user/register", values);
+                let res = await _axios("post", "/api/user/register", values);
                 try {
                     if (res.success) {
                         message.success('注册成功!即将去登录页面');

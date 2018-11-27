@@ -14,7 +14,7 @@ class LoginForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                let res = await _axios("post", "http://localhost:4455/api/user/login", values);
+                let res = await _axios("post", "/api/user/login", values);
                 if(res.success){
                     this.props.history.push(`/home`)
                 }

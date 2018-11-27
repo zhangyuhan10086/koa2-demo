@@ -16,6 +16,8 @@ const changeToArr = R.unless(
 )
 
 
+
+
 export class Route {
     constructor(app, apiPath) {
         this.app = app;
@@ -26,12 +28,16 @@ export class Route {
         //同步引入routes里面的js
         glob.sync(resolve(this.apiPath, "**/*.js")).forEach(require)
         for (let [conf, controller] of routerMap) {
+            //conf,map的key ，， controller=》 map的value，即请求每个接口之后执行的方法
+
             const controllers = isArray(controller)
             const prefixPath = conf.target[symbolPrefix]
             if (prefixPath) {
                 prefixPath = normalizePath(prefixPath)
-            }
+            };
+            //把路由请求路径拼全，控制域 + 请求的路径
             const routerPath = prefixPath + conf.path;
+            // ...controllers 依次执行回调
             this.router[conf.method](routerPath, ...controllers)
         }
 
@@ -40,11 +46,17 @@ export class Route {
     }
 }
 
+
+//这个函数的目的就是把 target[key]的 controllers 加上   convert（）传入的方法
 export const convert = middleware => (target, key, descriptor) => {
     target[key] = R.compose(
         R.concat(
             changeToArr(middleware)
         ),
+        (res)=>{
+            console.log(res);
+            return res
+        },
         changeToArr
     )(target[key])
     return descriptor
@@ -54,14 +66,19 @@ export const convert = middleware => (target, key, descriptor) => {
 
 const normalizePath = path => path.startsWith("/") ? path : `/${path}`
 
+
 const router = conf => (target, key, descriptor) => {
     conf.path = normalizePath(conf.path)
 
     routerMap.set({
         target: target,
         ...conf
-    }, target[key])
+    }, target[key]);
 }
+
+
+
+
 
 export const Controller = path => target => (target.prototype[symbolPrefix] = path)
 
@@ -97,14 +114,15 @@ export const All = path => router({
     path: path
 })
 
+
+//加上改修饰器时 就会先验证
 export const Auth = convert(async (ctx, next) => {
-    console.log( ctx.session )
     if (!ctx.session.user) {
         return (
             ctx.body = {
                 success: false,
-                errCode: 401,
-                errMsg: '登陆信息已失效, 请重新登陆'
+                code: 401,
+                remark: '登陆信息已失效, 请重新登陆'
             }
         )
     }

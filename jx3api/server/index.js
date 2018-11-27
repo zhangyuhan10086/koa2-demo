@@ -1,6 +1,6 @@
 const Koa = require("koa");
 const R = require("ramda")
-const cors = require('koa-cors');
+//const cors = require('koa-cors');     //解决跨域
 import config from "../config";
 
 const {
@@ -29,7 +29,7 @@ async function start() {
         port
     } = config
     //解决 跨域
-    app.use(cors());
+    //app.use(cors());
 
     await useMiddlewares(app)
 
