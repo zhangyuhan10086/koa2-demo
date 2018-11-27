@@ -1,0 +1,62 @@
+.discover_page {
+    .discover_home {
+        line-height: 100px;
+        text-align: center;
+        img{
+            width:100%;
+        }
+    }
+
+    .filter_box {
+        height: 100px;
+        text-align: center;
+        line-height: 100px;
+        background: #21243a;
+    }
+
+    .player_list {
+        display: flex;
+        flex-wrap: wrap;
+        background: #21243a;
+        margin-top: 10px;
+        padding-top: 20px;
+        padding-left:20px;
+        padding-right:20px;
+
+        .player_item {
+            display: flex;
+            margin: 0 12px 25px;
+            cursor: pointer;
+
+            .protrait {
+                img {
+                    display: block;
+                    width: 80px;
+                    height: 80px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    border: 10px solid #151c2d;
+                }
+            }
+
+            .text {
+                padding-left: 15px;
+                margin-top: 15px;
+                width: 210px;
+
+                .player_nick {
+                    margin-bottom: 5px;
+                }
+
+                .player_sex {
+                    margin-bottom: 5px;
+                }
+
+                .player_summary {
+                    height: 32px;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}

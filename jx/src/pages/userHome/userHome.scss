@@ -1,0 +1,23 @@
+.user_home{
+    .user_home_header{
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+    }
+    .user_home_content{
+        background: #21243a;
+        height:200px;
+        padding-top:20px;
+    }
+    .one_talk{
+        padding:0 20px;
+        margin-bottom: 40px;
+        display: flex;
+        .publish_date{
+            flex-shrink:0;
+            width:200px;
+        }
+    }
+}
+
+

@@ -1,0 +1,51 @@
+@import "../../scss/common.scss";
+html body {
+    background: #151c2d;
+}
+
+.header {
+    background: #21243a;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    .header_inner {
+        width: 1120px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 40px;
+        .nav_item {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-right: 30px;
+            cursor: pointer;
+        }
+        .hearder_right {
+            .header_img {
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #fff;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+.user_menu_list_router {
+    .menu_item {
+        cursor: pointer;
+        &:hover {
+            color: $red;
+        }
+    }
+}
+
+.content {
+    width: 1120px;
+    margin: 0 auto;
+}
