@@ -10,24 +10,55 @@
         text-align: center;
         line-height: 100px;
         background: #21243a;
+        margin-bottom: 20px;
     }
     .shuoshuo_wrap {
-        background: #21243a;
         .shuoshuo_list {
-            padding: 0 25px;
-            color: $white;
+            color: $white2;
         }
         .shuoshuo_item {
             display: flex;
+            padding: 16px;
+            background: #21243a;
+            margin-bottom: 10px;
             .publisher {
                 flex-shrink: 0;
                 width: 80px;
             }
-            .publisher_name{
+            .publisher_name {
                 font-size: 14px;
                 line-height: 25px;
                 font-weight: 700;
             }
+            .publisher_content {
+                .font {
+                    line-height: 25px;
+                }
+                .imgs {
+                    display: flex;
+                    margin: 5px 0;
+                    flex-wrap: wrap;
+                    li {
+                        width: 110px;
+                        height: 110px;
+                        margin-right: 10px;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+        .poster_btn {
+            height:40px;
+            width:100%;
+            background: #21243a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
     }
 }
