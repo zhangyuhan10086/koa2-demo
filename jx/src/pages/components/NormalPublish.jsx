@@ -1,7 +1,9 @@
 import "./NormalPublish.scss";
 import React from "react";
 import { } from 'react-router-dom';
-import { Modal, Input, Upload, Icon } from "antd"
+import { Modal, Input, Upload, Icon, Button } from "antd"
+import _axios from '../../utils/_axios'
+
 const { TextArea } = Input;
 
 export class NormalPublish extends React.Component {
@@ -11,14 +13,11 @@ export class NormalPublish extends React.Component {
     state = {
         previewVisible: false,
         previewImage: '',           //要预览的大图
-        fileList: [{          //上传的图片
-            uid: '-1',
-            name: 'xxx.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }],
+        fileList: [],
+        token: sessionStorage.getItem("qiniuToken"),
+        text: "",        //输入的文本内容
     }
-    //
+    //浏览大图
     handlePreview = (file) => {
         this.setState({
             previewImage: file.url || file.thumbUrl,
@@ -32,10 +31,7 @@ export class NormalPublish extends React.Component {
     }
     //图片有变回的回调
     handleChange = ({ fileList, file, event }) => {
-        console.log("file",file)
-        console.log("fileList",fileList)
         this.setState({ fileList });
-
     }
     //关闭浏览大图弹框
     previewImgCancel = (e) => {
@@ -43,12 +39,35 @@ export class NormalPublish extends React.Component {
             { previewVisible: false }
         )
     }
+    //提交发布
+    submit = async (e) => {
+        let imgs = this.state.fileList.map(item => {
+            if (item.response && item.response.key) {
+                return item.response.key
+            }
+        })
+        let postData = {
+            text: this.state.text,
+            imgs
+        };
+        console.log(postData);
+        let res = await _axios("post", "/api/normalShuo/publish", postData);
+        console.log(res)
+    }
+    changeContent = (value) => {
+        this.setState({
+            text: value
+        })
+    }
 
     componentWillMount() {
 
     }
     render() {
         const { previewVisible, previewImage, fileList } = this.state;
+        const data = {
+            token: this.state.token
+        }
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -66,14 +85,16 @@ export class NormalPublish extends React.Component {
             >
                 <div >
                     <div className="h3">想说的话</div>
-                    <TextArea rows={4} />
+                    <TextArea rows={4} value={this.state.text} onChange={e => this.changeContent(e.target.value)} />
                     <div className="upload_item clearfix">
                         <Upload
-                            action="//jsonplaceholder.typicode.com/posts/"
+                            action="http://up-z2.qiniup.com"
                             listType="picture-card"
                             fileList={fileList}
                             onPreview={this.handlePreview}
-                            onChange={this.handleChange}>
+                            onChange={this.handleChange}
+                            data={data}
+                        >
                             {fileList.length >= 3 ? null : uploadButton}
                         </Upload>
                         <Modal
@@ -83,6 +104,9 @@ export class NormalPublish extends React.Component {
                             width="800px" >
                             <img alt="example" style={{ width: '100%' }} src={previewImage} />
                         </Modal>
+                    </div>
+                    <div className="btns">
+                        <Button onClick={this.submit} >提交</Button>
                     </div>
                 </div>
             </Modal>

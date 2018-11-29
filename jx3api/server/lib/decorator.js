@@ -53,10 +53,6 @@ export const convert = middleware => (target, key, descriptor) => {
         R.concat(
             changeToArr(middleware)
         ),
-        (res)=>{
-            console.log(res);
-            return res
-        },
         changeToArr
     )(target[key])
     return descriptor

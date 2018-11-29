@@ -24,6 +24,7 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.3.3",
     "puppeteer": "^1.9.0",
+    "qiniu": "^7.2.1",
     "ramda": "^0.25.0"
   },
   "devDependencies": {

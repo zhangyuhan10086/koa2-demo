@@ -22,7 +22,6 @@ class LoginForm extends React.Component {
         })
     }
     goRegister = () => {
-        console.log(   this.props )
         this.props.history.push(`/register`)
     }
     async componentWillMount() {
