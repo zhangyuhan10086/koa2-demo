@@ -35,7 +35,6 @@ export async function checkPassword(username, password) {
     const user = await User.findOne({
         username
     }).exec()
-
     if (user) {
         //match = await user.comparePassword(password, user.password)
         match=true;

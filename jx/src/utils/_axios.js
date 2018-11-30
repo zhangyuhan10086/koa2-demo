@@ -1,5 +1,7 @@
 import axios from "axios"
-
+import {
+    message
+} from 'antd';
 export default (method, url, params) => {
     return new Promise((resolve, reject) => {
         let config = {
@@ -12,7 +14,14 @@ export default (method, url, params) => {
             config['params'] = params;
         }
         axios(config).then((res) => {
-            resolve(typeof res.data === 'object' ? res.data : JSON.parse(res.data))
+            let result = typeof res.data === 'object' ? res.data : JSON.parse(res.data);
+            if (result.code == 401) {
+                message.warning('未登录，即将跳转至登录页面');
+                setTimeout(() => {
+                    window.location.href = "/#/login";
+                }, 1500)
+            };
+            resolve(result)
         }).catch((error) => {
             if (error.response) {
                 reject(error.response.data)

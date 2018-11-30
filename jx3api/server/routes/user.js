@@ -14,12 +14,11 @@ const {
 @Controller("/api/user")
 export default class UserController {
     @Get("/all")
-    @Auth
     async getUsers(ctx, next) {
         const users = await getAllUsers()
         ctx.body = {
             users,
-            success:true
+            success: true
         }
     }
     @Post("/register")
@@ -49,21 +48,20 @@ export default class UserController {
             user,
             match
         } = data;
-
-        ctx.session.user = {
-            _id: user._id,
-            username: user.username
-        };
-        if(match){
+        if (match) {
+            ctx.session.user = {
+                _id: user._id,
+                username: user.username
+            };
             ctx.body = {
                 success: true,
                 username: user.username,
-                remark:"登录成功"
+                remark: "登录成功"
             }
-        }else{
+        } else {
             ctx.body = {
                 success: false,
-                remark:"登录失败，没有改账号或者密码错误"
+                remark: "登录失败，没有该账号或者密码错误"
             }
         }
     }

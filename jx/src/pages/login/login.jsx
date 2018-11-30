@@ -1,7 +1,7 @@
 import "./login.scss";
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
+import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import _axios from '../../utils/_axios'
 
 const FormItem = Form.Item;
@@ -10,13 +10,24 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props)
     }
+    state = {
+        loading: false,
+    }
     submit = (e) => {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
+                this.setState({
+                    loading: true
+                })
                 let res = await _axios("post", "/api/user/login", values);
-                if(res.success){
-                    this.props.history.push(`/home`)
+                this.setState({
+                    loading: false
+                })
+                if (res.success) {
+                    this.props.history.push(`/home`);
+                } else {
+                    message.error(res.remark);
                 }
             }
         })
@@ -56,7 +67,7 @@ class LoginForm extends React.Component {
                         <Checkbox>记住账号</Checkbox>
                         )}
                     <a className="login-form-forgot" >忘记密码</a>
-                    <Button type="primary" htmlType="submit" className="login-form-button" >
+                    <Button type="primary" htmlType="submit" className="login-form-button" loading={this.state.loading}  >
                         登录
                     </Button>
                     Or <a onClick={this.goRegister} >立即注册!</a>

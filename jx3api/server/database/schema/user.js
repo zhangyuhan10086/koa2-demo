@@ -26,11 +26,11 @@ const userSchema = new Schema({
     },
     meta: {
         createdAt: {
-            type: Date,
+            type: Number,
             default: Date.now()
         },
         updateAt: {
-            type: Date,
+            type: Number,
             default: Date.now()
         }
     }
@@ -52,6 +52,15 @@ userSchema.pre('save', function (next) {
     //         next()
     //     })
     // })
+})
+userSchema.pre('save', function (next) {
+    console.log("this", this)
+    if (this.isNew) {
+        this.meta.createdAt = this.meta.updatedAt = Date.now()
+    } else {
+        this.meta.updatedAt = Date.now()
+    }
+    next()
 })
 
 //虚拟字段

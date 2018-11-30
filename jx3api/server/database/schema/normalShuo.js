@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Mixed = Schema.Types.Mixed;
-
+const ObjectId = Schema.Types.ObjectId;
 // unique: true,
 // required: true,
 
 const normalShuo = new Schema({
     publisherId: {
-        type: String,
+        type: ObjectId,
+        ref: 'User',
         required: true,
     },
     content: {
@@ -15,15 +15,15 @@ const normalShuo = new Schema({
             type: String,
             required: true,
         },
-        imgs:[String]
+        imgs: [String]
     },
     meta: {
         createdAt: {
-            type: Date,
+            type: Number,
             default: Date.now()
         },
         updateAt: {
-            type: Date,
+            type: Number,
             default: Date.now()
         }
     }
@@ -31,9 +31,15 @@ const normalShuo = new Schema({
 
 //保存前中间件
 normalShuo.pre('save', function (next) {
-
-    next();
-  
+    console.log("this", this.isNew)
+    if (this.isNew) {
+        let date = Date.now();
+        this.meta.createdAt = date;
+        this.meta.updateAt = date;
+    } else {
+        this.meta.updateAt = Date.now()
+    }
+    next()
 })
 
 

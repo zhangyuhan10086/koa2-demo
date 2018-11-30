@@ -5,7 +5,8 @@ const {
     Auth
 } = require("../lib/decorator")
 const {
-    publishShuo
+    publishShuo,
+    getAllShuo
 } = require("../service/normalShuo");
 
 @Controller("/api/normalShuo")
@@ -22,6 +23,15 @@ export default class NormalShuoController {
         ctx.body = {
             success: true,
             remark: ""
+        }
+    }
+    @Get("/getAll")
+    async getAll(ctx, next) {
+        let res = await getAllShuo();
+        ctx.body = {
+            success: true,
+            remark: "",
+            result: res
         }
     }
 }

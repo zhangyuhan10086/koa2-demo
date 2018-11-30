@@ -95,7 +95,7 @@ export class NormalPublish extends React.Component {
                             onChange={this.handleChange}
                             data={data}
                         >
-                            {fileList.length >= 3 ? null : uploadButton}
+                            {fileList.length >= 8 ? null : uploadButton}
                         </Upload>
                         <Modal
                             visible={previewVisible}

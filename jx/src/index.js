@@ -34,7 +34,7 @@ const rootElement=document.getElementById("app");
     }
 })();
 //设置一个全局的图片域名
-const imgDomain="piy3e9xq1.bkt.clouddn.com";
+const imgDomain="http://piy3e9xq1.bkt.clouddn.com/";
 sessionStorage.setItem("imgDomain",imgDomain)
 
 
