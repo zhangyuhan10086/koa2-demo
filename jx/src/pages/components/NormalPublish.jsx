@@ -1,7 +1,7 @@
 import "./NormalPublish.scss";
 import React from "react";
 import { } from 'react-router-dom';
-import { Modal, Input, Upload, Icon, Button } from "antd"
+import { Modal, Input, Upload, Icon, Button, message } from "antd"
 import _axios from '../../utils/_axios'
 
 const { TextArea } = Input;
@@ -16,6 +16,7 @@ export class NormalPublish extends React.Component {
         fileList: [],
         token: sessionStorage.getItem("qiniuToken"),
         text: "",        //输入的文本内容
+        submitLoading: false
     }
     //浏览大图
     handlePreview = (file) => {
@@ -50,9 +51,26 @@ export class NormalPublish extends React.Component {
             text: this.state.text,
             imgs
         };
-        console.log(postData);
+        if(!this.state.text){
+            message.warning('不能发布空白内容');
+            return false;
+        }
+        this.setState({
+            submitLoading: true
+        })
         let res = await _axios("post", "/api/normalShuo/publish", postData);
-        console.log(res)
+        if (res.success) {
+            this.props.onRefresh();
+            message.success('发布成功');
+            setTimeout(() => {
+                this.state.fileList = [];
+                this.state.text = "";
+                this.handleCancel();
+                this.setState({
+                    submitLoading: false
+                })
+            }, 1000)
+        }
     }
     changeContent = (value) => {
         this.setState({
@@ -106,7 +124,7 @@ export class NormalPublish extends React.Component {
                         </Modal>
                     </div>
                     <div className="btns">
-                        <Button onClick={this.submit} >提交</Button>
+                        <Button onClick={this.submit} loading={this.state.submitLoading} >提交</Button>
                     </div>
                 </div>
             </Modal>

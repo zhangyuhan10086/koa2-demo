@@ -1,17 +1,27 @@
 import React from "react";
-import "../../normalize.css";
 import "./router.scss";
 
 import { NavLink, Route, Switch } from 'react-router-dom';
 import AC from "../../utils/asyncComponent"
+import _axios from '../../utils/_axios'
 
-import { Avatar, Popover } from 'antd';
+import { Avatar, Popover, message } from 'antd';
+import { getUser } from "../../utils/common"
 
-const content = (
-  <div className="user_menu_list_router" >
-    <div className="menu_item" >登出</div>
-  </div>
-);
+const content = (e) => {
+    let _this = e;
+    return (
+        <div className="user_menu_list_router" >
+            <div className="menu_item" onClick={_this.logoOut} >登出</div>
+        </div>
+    )
+}
+
+// const content = (
+//     <div className="user_menu_list_router" >
+//         <div className="menu_item" onClick={this.logoOut} >登出</div>
+//     </div>
+// );
 
 
 const Home = AC(() => import("../home/home"));
@@ -31,13 +41,23 @@ class App extends React.Component {
                     name: "发现",
                     path: "/discover"
                 },
-            ]
+            ],
+            userInfo: getUser() || {}
         }
     }
     goOtherPage(path) {
 
     }
-
+    async logoOut() {
+        try {
+            let res = await _axios("post", "/api/user/logout");
+            if (res.success) {
+                message.success('登出成功');
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     render() {
         const { navList } = this.state
         return (
@@ -56,10 +76,10 @@ class App extends React.Component {
                             }
                         </div>
                         <div className="hearder_right">
-                            <Popover placement="bottom"  content={content}>
+                            <Popover placement="bottom" content={content(this)}>
                                 <Avatar
                                     size="large"
-                                    src="https://img.yzcdn.cn/public_files/2018/02/01/5df3bb4b640ddc5efae915b7af90a243.png"
+                                    src={this.state.userInfo.portraitUrl}
                                     style={{ cursor: "pointer" }}
                                 />
                             </Popover>

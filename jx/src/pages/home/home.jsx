@@ -1,10 +1,10 @@
 import "./home.scss";
 import React from "react";
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import { Avatar, Icon, Modal } from "antd"
+import { Avatar, Icon, Modal, message } from "antd"
 import { NormalPublish } from "../components/NormalPublish"
 import _axios from '../../utils/_axios'
-import { dateTimeFormat } from "../../utils/common"
+import { dateTimeFormat, getUser, isLogin } from "../../utils/common"
 
 export class Home extends React.Component {
     constructor(props) {
@@ -27,8 +27,22 @@ export class Home extends React.Component {
             shuoList: res.result
         })
     }
+    refresh = () => {
+        this.getShuoList();
+    }
+    //点击发布按钮
+    clickPublish = () => {
+        if (isLogin()) {
+            this.setState({ visible: true })
+        } else {
+            message.warning('未登录，即将跳转至登录页面');
+            setTimeout(() => {
+                this.props.history.push(`/login`)
+            }, 1000)
+        }
+    }
     componentWillMount() {
-
+        console.log(  getUser() )
     }
     componentDidMount() {
         this.getShuoList();
@@ -80,11 +94,11 @@ export class Home extends React.Component {
                             ))
                         }
                     </div>
-                    <div className="poster_btn" onClick={() => { this.setState({ visible: true }) }} >
+                    <div className="poster_btn" onClick={this.clickPublish} >
                         <Icon type="plus" style={{ color: "#fff", fontSize: "20px" }} />
                     </div>
                 </div>
-                <NormalPublish visible={this.state.visible} onCancel={this.cancel} />
+                <NormalPublish visible={this.state.visible} onCancel={this.cancel} onRefresh={this.refresh} />
             </div>
         )
     }

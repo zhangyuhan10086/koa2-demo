@@ -22,7 +22,7 @@ const normalShuo = new Schema({
             type: Number,
             default: Date.now()
         },
-        updateAt: {
+        updatedAt: {
             type: Number,
             default: Date.now()
         }
@@ -35,9 +35,9 @@ normalShuo.pre('save', function (next) {
     if (this.isNew) {
         let date = Date.now();
         this.meta.createdAt = date;
-        this.meta.updateAt = date;
+        this.meta.updatedAt = date;
     } else {
-        this.meta.updateAt = Date.now()
+        this.meta.updatedAt = Date.now()
     }
     next()
 })

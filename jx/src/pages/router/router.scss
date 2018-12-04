@@ -3,6 +3,10 @@ html body {
     background: #151c2d;
 }
 
+#app {
+    min-height: 100%;
+}
+
 .header {
     background: #21243a;
     height: 60px;
@@ -36,6 +40,7 @@ html body {
         }
     }
 }
+
 .user_menu_list_router {
     .menu_item {
         cursor: pointer;

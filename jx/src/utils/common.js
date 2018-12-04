@@ -28,3 +28,27 @@ export const dateTimeFormat = (value, type) => {
         }
     }
 }
+
+export const setCookie = (name, value, days) => {
+    var date = new Date();
+    date.setDate(date.getDate() + days);
+    document.cookie = name + '=' + value + ';expires=' + date;
+}
+
+export const getCookie = (name) => {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");　　
+    return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
+}
+
+export const getUser = () => {
+    let user = JSON.parse( getCookie('user') )
+    return user;
+}
+
+export const isLogin = () => {
+    if (getUser() && getCookie('koa:sess')) {
+        return true
+    } else {
+        return false;
+    }
+}

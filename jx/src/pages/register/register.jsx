@@ -17,8 +17,8 @@ class registerForm extends React.Component {
         e.preventDefault();
         this.props.form.validateFields(async (err, values) => {
             if (!err) {
-                let res = await _axios("post", "/api/user/register", values);
                 try {
+                    let res = await _axios("post", "/api/user/register", values);
                     if (res.success) {
                         message.success('注册成功!即将去登录页面');
                         setTimeout(() => {
@@ -88,39 +88,41 @@ class registerForm extends React.Component {
         };
 
         return (
-            <Form onSubmit={this.submit} className="register_from" >
-                <FormItem
-                    {...formItemLayout}
-                    label="账号">
-                    {getFieldDecorator('username', {
-                        rules: [{
-                            required: true, validator: this.validateUserName,
-                        },],
-                    }, )(
-                        <Input />
-                        )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    label="密码">
-                    {getFieldDecorator('password', {
-                        rules: [{
-                            required: true, validator: this.validatePassword,
-                        },],
-                    })(
-                        <Input type="password" />
-                        )}
-                </FormItem>
-                <FormItem
-                    {...formItemLayout}
-                    {...tailFormItemLayout}
-                    colon={false}
-                    label="&nbsp;"
-                >
-                    <Button type="primary" htmlType="submit">注册</Button>
-                    <Button type="primary" style={{ marginLeft: "20px" }} onClick={this.goLogin} >去登录</Button>
-                </FormItem>
-            </Form>
+            <div className="register_page" >
+                <Form onSubmit={this.submit} className="register_from" >
+                    <FormItem
+                        {...formItemLayout}
+                        label="账号">
+                        {getFieldDecorator('username', {
+                            rules: [{
+                                required: true, validator: this.validateUserName,
+                            },],
+                        }, )(
+                            <Input />
+                            )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="密码">
+                        {getFieldDecorator('password', {
+                            rules: [{
+                                required: true, validator: this.validatePassword,
+                            },],
+                        })(
+                            <Input type="password" />
+                            )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        {...tailFormItemLayout}
+                        colon={false}
+                        label="&nbsp;"
+                    >
+                        <Button type="primary" htmlType="submit">注册</Button>
+                        <Button type="primary" style={{ marginLeft: "20px" }} onClick={this.goLogin} >去登录</Button>
+                    </FormItem>
+                </Form>
+            </div>
         )
     }
 }

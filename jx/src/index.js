@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 // import App from './pages/router/router';
 import AC from "./utils/asyncComponent"
 import _axios from './utils/_axios'
+import "./normalize.css";
+
 
 import {
     HashRouter,Route,Switch

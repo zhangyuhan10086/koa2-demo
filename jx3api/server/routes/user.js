@@ -49,13 +49,16 @@ export default class UserController {
             match
         } = data;
         if (match) {
-            ctx.session.user = {
+            let userItem = {
                 _id: user._id,
-                username: user.username
-            };
+                username: user.username,
+                nickname: user.nickname,
+                portraitUrl: user.portraitUrl,
+            }
+            ctx.session.user = userItem
             ctx.body = {
                 success: true,
-                username: user.username,
+                user: userItem,
                 remark: "登录成功"
             }
         } else {
@@ -63,6 +66,14 @@ export default class UserController {
                 success: false,
                 remark: "登录失败，没有该账号或者密码错误"
             }
+        }
+    }
+    @Post("/logout")
+    async logout(ctx, next) {
+        ctx.session.user=null;
+        ctx.body = {
+            success: true,
+            remark: "登出成功"
         }
     }
 }

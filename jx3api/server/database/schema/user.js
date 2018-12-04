@@ -20,16 +20,19 @@ const userSchema = new Schema({
     },
     nickname: {
         type: String,
+        required: true,
+        unique: true
     },
     portraitUrl: {
         type: String,
+        required: true,
     },
     meta: {
         createdAt: {
             type: Number,
             default: Date.now()
         },
-        updateAt: {
+        updatedAt: {
             type: Number,
             default: Date.now()
         }

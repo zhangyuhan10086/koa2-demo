@@ -114,6 +114,7 @@ export const All = path => router({
 //加上改修饰器时 就会先验证
 export const Auth = convert(async (ctx, next) => {
     if (!ctx.session.user) {
+
         return (
             ctx.body = {
                 success: false,

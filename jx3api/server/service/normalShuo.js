@@ -17,6 +17,6 @@ export const getAllShuo = async () => {
     const shuoList = await NormalShuo.find(query).populate({
         path: 'publisherId',
         model: 'User',
-    }).sort('-meta.updateAt')
+    }).sort('-meta.updatedAt')
     return shuoList;
 }
