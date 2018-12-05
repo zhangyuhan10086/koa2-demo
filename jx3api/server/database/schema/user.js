@@ -27,6 +27,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    roleCode: {
+        type: Number,
+        required: true,
+    },
     meta: {
         createdAt: {
             type: Number,

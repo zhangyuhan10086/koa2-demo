@@ -7,11 +7,7 @@ export const getAllUsers = async () => {
     return users
 }
 
-export const registerUser = async (request) => {
-    const {
-        username,
-        password
-    } = request;
+export const registerUser = async (username, password) => {
     const user = await User.find({
         username
     })
@@ -21,7 +17,8 @@ export const registerUser = async (request) => {
             username,
             password,
             portraitUrl: 'https://img.yzcdn.cn/public_files/2018/02/01/5df3bb4b640ddc5efae915b7af90a243.png', //默认头像
-            nickname: '默认用户' + Date.now()
+            nickname: '默认用户' + Date.now(),
+            roleCode: 1, //1就是普通用户
         });
         await userItem.save()
         return true;

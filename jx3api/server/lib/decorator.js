@@ -58,6 +58,30 @@ export const convert = middleware => (target, key, descriptor) => {
     return descriptor
 }
 
+export const Required = paramsObj => convert(async (ctx, next) => {
+    let errs = []
+
+    R.forEachObjIndexed(
+        (val, key) => {
+            errs = errs.concat(
+                R.filter(
+                    name => !R.has(name, ctx.request[key])
+                )(val)
+            )
+        }
+    )(paramsObj)
+
+    if (!R.isEmpty(errs)) {
+        return (
+            ctx.body = {
+                success: false,
+                errCode: 412,
+                errMsg: `${R.join(', ', errs)} is required`
+            }
+        )
+    }
+    await next()
+})
 
 
 const normalizePath = path => path.startsWith("/") ? path : `/${path}`

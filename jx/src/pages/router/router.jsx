@@ -6,27 +6,23 @@ import AC from "../../utils/asyncComponent"
 import _axios from '../../utils/_axios'
 
 import { Avatar, Popover, message } from 'antd';
-import { getUser } from "../../utils/common"
+import { getUser, clearAllCookie } from "../../utils/common"
 
 const content = (e) => {
-    let _this = e;
     return (
         <div className="user_menu_list_router" >
-            <div className="menu_item" onClick={_this.logoOut} >登出</div>
+            <div className="menu_item" onClick={e.logoOut} >登出</div>
         </div>
     )
 }
 
-// const content = (
-//     <div className="user_menu_list_router" >
-//         <div className="menu_item" onClick={this.logoOut} >登出</div>
-//     </div>
-// );
 
 
 const Home = AC(() => import("../home/home"));
 const Discover = AC(() => import("../discover/discover"))
 const UserHome = AC(() => import("../userHome/userHome"))
+const MatchingTeam = AC(() => import("../matchingTeam/matchingTeam"))
+const Fb = AC(() => import("../console/fb/fb"))
 
 class App extends React.Component {
     constructor(props) {
@@ -41,28 +37,39 @@ class App extends React.Component {
                     name: "发现",
                     path: "/discover"
                 },
+                {
+                    name: "组队",
+                    path: "/matchingTeam"
+                },
             ],
             userInfo: getUser() || {}
         }
+    }
+
+    //打开console目录
+    openConsole = () => {
+        this.setState({
+            navList: [
+                {
+                    name: "副本",
+                    path: "/fb"
+                },
+            ],
+        })
     }
     goOtherPage(path) {
 
     }
     async logoOut() {
-        try {
-            let res = await _axios("post", "/api/user/logout");
-            if (res.success) {
-                message.success('登出成功');
-            }
-        } catch (err) {
-            console.log(err)
-        }
+        clearAllCookie();
+        message.success('登出成功');
     }
     render() {
         const { navList } = this.state
         return (
             <div>
                 <div className="header" >
+                    {this.state.userInfo.roleCode == 110 ? <div className="console" onClick={this.openConsole} ></div> : null}
                     <div className="header_inner">
                         <div className="header_left" >
                             {
@@ -91,6 +98,8 @@ class App extends React.Component {
                         <Route path="/home" component={Home} />
                         <Route path="/discover" component={Discover} />
                         <Route path="/userHome/:uid" component={UserHome} />
+                        <Route path="/matchingTeam" component={MatchingTeam} />
+                        <Route path="/fb" component={Fb} />
                     </Switch>
                 </div>
             </div>

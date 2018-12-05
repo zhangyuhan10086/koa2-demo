@@ -15,7 +15,8 @@ export class Home extends React.Component {
             ],
             visible: false,
             shuoList: [],
-            imgDomain: sessionStorage.getItem("imgDomain") || ''
+            imgDomain: sessionStorage.getItem("imgDomain") || '',
+            
         }
     }
     cancel = (value) => {
@@ -42,7 +43,7 @@ export class Home extends React.Component {
         }
     }
     componentWillMount() {
-        console.log(  getUser() )
+     
     }
     componentDidMount() {
         this.getShuoList();
@@ -66,13 +67,13 @@ export class Home extends React.Component {
                                         <div className="publisher_head">
                                             <Avatar
                                                 size={50}
-                                                src="https://img.yzcdn.cn/public_files/2018/02/01/5df3bb4b640ddc5efae915b7af90a243.png"
+                                                src={item.publisherId.portraitUrl}
                                                 style={{ cursor: "pointer" }}
                                             />
                                         </div>
                                     </div>
                                     <div className="publisher_content" >
-                                        <div className="publisher_name" >{item.publisherId.username}
+                                        <div className="publisher_name" >{item.publisherId.nickname}
                                             <span>发布于： {dateTimeFormat(item.meta.createdAt)}</span>
                                         </div>
                                         <div className="font">

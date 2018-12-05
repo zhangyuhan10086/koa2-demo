@@ -1,0 +1,70 @@
+@import "../../scss/common.scss";
+$bg: rgba(0, 0, 0, 0.5);
+.matchingTeam {
+    .list_wrap {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        .teambox {
+            width: 360px;
+            height: 460px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            &:nth-of-type(3n) {
+                margin-right: 0;
+            }
+            .fb_description {
+                width: 100%;
+                background: $bg;
+                padding: 10px 0;
+                h4 {
+                    padding: 0 20px;
+                    font-size: 12px;
+                    color: $white2;
+                }
+                .date {
+                    font-size: 12px;
+                    padding: 0 20px;
+                    color: $white;
+                }
+                p {
+                    color: $white;
+                    margin-bottom: 0;
+                    font-size: 11px;
+                    padding: 0 20px;
+                }
+            }
+            .team_member_wrap {
+                background: $bg;
+                padding: 10px 20px;
+                display: flex;
+                flex-wrap: wrap;
+                .member{
+                    width:34px;
+                    height:34px;
+                    background: #fff;
+                    border-radius: 50%;
+                    margin-right: 6px;
+                    margin-bottom: 6px;
+                }
+                .apply{
+                    width:34px;
+                    height:34px;
+                    font-size:22px;
+                    display: flex;
+                    flex-direction: column;
+                    align-content: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    background: #fff;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

@@ -41,7 +41,7 @@ export const getCookie = (name) => {
 }
 
 export const getUser = () => {
-    let user = JSON.parse( getCookie('user') )
+    let user = JSON.parse(getCookie('user'))
     return user;
 }
 
@@ -50,5 +50,13 @@ export const isLogin = () => {
         return true
     } else {
         return false;
+    }
+}
+
+export const clearAllCookie = () => {
+    var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+    if (keys) {
+        for (var i = keys.length; i--;)
+            document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
     }
 }

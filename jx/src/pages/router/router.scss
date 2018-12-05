@@ -3,15 +3,18 @@ html body {
     background: #151c2d;
 }
 
-#app {
-    min-height: 100%;
-}
-
 .header {
     background: #21243a;
     height: 60px;
     display: flex;
     align-items: center;
+    .console{
+        position: relative;
+        left:0;
+        top:0;
+        width:20px;
+        height: 20px;
+    }
     .header_inner {
         width: 1120px;
         margin: 0 auto;

@@ -3,7 +3,8 @@ const {
     Get,
     Post,
     Put,
-    Auth
+    Auth,
+    Required
 } = require("../lib/decorator")
 const {
     getAllUsers,
@@ -21,10 +22,19 @@ export default class UserController {
             success: true
         }
     }
+
+    //注册
     @Post("/register")
+    @Required({
+        body: ['username', 'password']
+    })
     async register(ctx, next) {
         let request = ctx.request.body;
-        let res = await registerUser(request);
+        const {
+            username,
+            password
+        } = request;
+        let res = await registerUser(username, password);
         if (!res) {
             ctx.body = {
                 success: false,
@@ -37,7 +47,12 @@ export default class UserController {
             }
         }
     }
+
+    //登录
     @Post("/login")
+    @Required({
+        body: ['username', 'password']
+    })
     async login(ctx, next) {
         const {
             username,
@@ -54,6 +69,7 @@ export default class UserController {
                 username: user.username,
                 nickname: user.nickname,
                 portraitUrl: user.portraitUrl,
+                roleCode: user.roleCode,
             }
             ctx.session.user = userItem
             ctx.body = {
@@ -68,14 +84,7 @@ export default class UserController {
             }
         }
     }
-    @Post("/logout")
-    async logout(ctx, next) {
-        ctx.session.user=null;
-        ctx.body = {
-            success: true,
-            remark: "登出成功"
-        }
-    }
+
 }
 
 
