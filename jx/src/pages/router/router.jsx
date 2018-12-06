@@ -22,7 +22,10 @@ const Home = AC(() => import("../home/home"));
 const Discover = AC(() => import("../discover/discover"))
 const UserHome = AC(() => import("../userHome/userHome"))
 const MatchingTeam = AC(() => import("../matchingTeam/matchingTeam"))
+const Appearance = AC(() => import("../appearance/appearance"))
+const Publish = AC(() => import("../appearance/publish"))
 const Fb = AC(() => import("../console/fb/fb"))
+
 
 class App extends React.Component {
     constructor(props) {
@@ -40,6 +43,10 @@ class App extends React.Component {
                 {
                     name: "组队",
                     path: "/matchingTeam"
+                },
+                {
+                    name: "外观",
+                    path: "/appearance"
                 },
             ],
             userInfo: getUser() || {}
@@ -99,6 +106,8 @@ class App extends React.Component {
                         <Route path="/discover" component={Discover} />
                         <Route path="/userHome/:uid" component={UserHome} />
                         <Route path="/matchingTeam" component={MatchingTeam} />
+                        <Route path="/appearance" component={Appearance} />
+                        <Route path="/publish" component={Publish} />
                         <Route path="/fb" component={Fb} />
                     </Switch>
                 </div>

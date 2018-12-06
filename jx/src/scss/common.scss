@@ -8,6 +8,13 @@
     display: table;
 }
 
+//文本超出
+@mixin textover {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 $red:#ff6fa2;
 $white: rgba(255, 255, 255, 0.8);
 $white2:#fff; //常用字体颜色

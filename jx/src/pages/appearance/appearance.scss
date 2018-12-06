@@ -1,0 +1,86 @@
+@import "../../scss/common.scss";
+$bg: rgba(0, 0, 0, 0.5);
+.appearance_list {
+    .list_wrap {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        .appearance_item {
+            width: 360px;
+            height: 460px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            justify-content: space-between;
+            &:nth-of-type(3n) {
+                margin-right: 0;
+            }
+            .au_description {
+                width: 100%;
+                background: $bg;
+                padding: 10px 0;
+                h4 {
+                    padding: 0 20px;
+                    font-size: 12px;
+                    color: $white2;
+                    display: flex;
+                    justify-content: space-between;
+                    span {
+                        color: $white2;
+                    }
+                }
+                .date {
+                    font-size: 12px;
+                    padding: 0 20px;
+                    color: $white;
+                    display: flex;
+                    justify-content: space-between;
+                    .heart {
+                        span {
+                            padding-right: 4px;
+                        }
+                        img {
+                            width: 22px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+            .comment_wrap {
+                background: $bg;
+                padding: 10px 20px;
+                .comment_item {
+                    font-size: 11px;
+                    color: $white;
+                    display: flex;
+                    .reply_au {
+                        padding-right: 10px;
+                        flex-shrink: 0;
+                    }
+                    .reply_font {
+                        @include textover;
+                    }
+                }
+                .more {
+                    font-size: 16px;
+                    line-height: 16px;
+                    padding-left: 1px;
+                    color: $white;
+                }
+            }
+        }
+    }
+    .poster_btn {
+        height: 40px;
+        width: 100%;
+        background: #21243a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+}
