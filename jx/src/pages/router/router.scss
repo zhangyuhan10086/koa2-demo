@@ -1,18 +1,18 @@
 @import "../../scss/common.scss";
 html body {
-    background: #151c2d;
+    background: #f0f0f0;
 }
 
 .header {
-    background: #21243a;
+    background: #fff;
     height: 60px;
     display: flex;
     align-items: center;
-    .console{
+    .console {
         position: relative;
-        left:0;
-        top:0;
-        width:20px;
+        left: 0;
+        top: 0;
+        width: 20px;
         height: 20px;
     }
     .header_inner {
@@ -23,7 +23,7 @@ html body {
         align-items: center;
         height: 40px;
         .nav_item {
-            color: rgba(255, 255, 255, 0.8);
+            color:#333;
             font-size: 14px;
             margin-right: 30px;
             cursor: pointer;
@@ -51,9 +51,4 @@ html body {
             color: $red;
         }
     }
-}
-
-.content {
-    width: 1120px;
-    margin: 0 auto;
 }

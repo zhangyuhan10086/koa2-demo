@@ -12,11 +12,8 @@ export class Appearance extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            navList: [
-
-            ],
             visible: false,
-            shuoList: [],
+            listData: [],
             imgDomain: sessionStorage.getItem("imgDomain") || '',
 
         }
@@ -24,12 +21,7 @@ export class Appearance extends React.Component {
     cancel = (value) => {
         this.setState({ visible: value })
     }
-    getShuoList = async () => {
-        let res = await _axios("get", "/api/normalShuo/getAll");
-        this.setState({
-            shuoList: res.result
-        })
-    }
+
     refresh = () => {
         this.getShuoList();
     }
@@ -48,46 +40,57 @@ export class Appearance extends React.Component {
     toPublish = () => {
         this.props.history.push(`/publish`)
     }
+    //获取列表
+    getList = async () => {
+        let res = await _axios("get", "/api/appearance/getAll");
+        this.setState({
+            listData: res.result
+        })
+    }
     componentWillMount() {
 
     }
     componentDidMount() {
-        this.getShuoList();
+        this.getList();
     }
     render() {
-
+        const { listData } = this.state;
         return (
             <div className="appearance_list" >
                 <div className="list_wrap">
-                    <div className="appearance_item" style={{ backgroundImage: "url('http://piy3e9xq1.bkt.clouddn.com/FrPxSlEFS35bArq9YbZUxMqBXtwq')" }} >
-                        <div className="au_description">
-                            <h4>
-                                <span>外观名称</span>
-                                <span>By zhangyuhan</span>
-                            </h4>
-                            <div className="date">
-                                <span>发布日期：2018-7-1 18:00:00</span>
-                                <div className="praise">
-                                    <div className="heart">
-                                        <span>1111</span>
-                                        <img src={xinImg} alt="" />
-                                        <img src={xin2Img} alt="" />
+                    {
+                        listData.map((item, index) => (
+                            <div className="appearance_item" key={index}  style={{ backgroundImage: "url('http://piy3e9xq1.bkt.clouddn.com/FrPxSlEFS35bArq9YbZUxMqBXtwq')" }} >
+                                <div className="au_description">
+                                    <h4>
+                                        <span>{item.appearanceTitle}</span>
+                                        <span>By  {item.publisherId.nickname}</span>
+                                    </h4>
+                                    <div className="date">
+                                        <span>发布日期：{dateTimeFormat(item.meta.createdAt)}</span>
+                                        <div className="praise">
+                                            <div className="heart">
+                                                <span>1111</span>
+                                                <img src={xinImg} alt="" />
+                                                <img src={xin2Img} alt="" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                <div className="comment_wrap">
+                                    <div className="comment_item">
+                                        <div className="reply_au">长明宇:</div>
+                                        <div className="reply_font">这个外观真好看</div>
+                                    </div>
+                                    <div className="comment_item">
+                                        <div className="reply_au">杀伐:</div>
+                                        <div className="reply_font">土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊</div>
+                                    </div>
+                                    <div className="more" >. . .</div>
+                                </div>
                             </div>
-                        </div>
-                        <div className="comment_wrap">
-                            <div className="comment_item">
-                                <div className="reply_au">长明宇:</div>
-                                <div className="reply_font">这个外观真好看</div>
-                            </div>
-                            <div className="comment_item">
-                                <div className="reply_au">杀伐:</div>
-                                <div className="reply_font">土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊</div>
-                            </div>
-                            <div className="more" >. . .</div>
-                        </div>
-                    </div>
+                        ))
+                    }
                 </div>
                 <div className="poster_btn" onClick={this.toPublish} >
                     <Icon type="plus" style={{ color: "#fff", fontSize: "20px" }} />
