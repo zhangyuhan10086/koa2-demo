@@ -36,8 +36,30 @@
         }
         .modal_inner {
             padding: 20px;
-            .cover_btns{
+            .cover_btns_t {
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: center;
+            }
+            .cover_c {
+                display: flex;
+                justify-content: center;
+                height: 580px;
+                .cover_show_img{
+                    display: block;
+                    height: 480px;
+                }
+                canvas{
+                    border: 1px solid #e5e5e5;
+                }
+            }
+            .cover_btns {
                 margin: 20px 0;
+                height: 90px;
+                .cover_btns_i {
+                    display: flex;
+                    justify-content: center;
+                }
             }
         }
     }
@@ -45,5 +67,6 @@
         display: flex;
         padding-top: 40px;
         justify-content: center;
+        padding-bottom: 40px;
     }
 }

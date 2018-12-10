@@ -12,7 +12,7 @@ export class Loading extends React.Component {
     render() {
         return (
             <div className="loading_c" >
-                <Icon type="loading" style={{ fontSize:"80px"}} />
+                <Icon type="loading" style={{ fontSize:"80px",color:"#ff6fa2" }} />
             </div>
         )
     }

@@ -5,6 +5,10 @@ import { Avatar, Icon, Modal, message } from "antd"
 import _axios from '../../utils/_axios'
 import { dateTimeFormat, getUser, isLogin } from "../../utils/common"
 
+import { CSSTransition } from 'react-transition-group';
+
+import AppearanceModal from "./appearanceModal"
+
 const xinImg = require('../../statics/xin.svg')
 const xin2Img = require('../../statics/xinshi.svg')
 
@@ -15,7 +19,7 @@ export class Appearance extends React.Component {
             visible: false,
             listData: [],
             imgDomain: sessionStorage.getItem("imgDomain") || '',
-
+            showMoadl: false,
         }
     }
     cancel = (value) => {
@@ -47,6 +51,18 @@ export class Appearance extends React.Component {
             listData: res.result
         })
     }
+    //打开大图弹框
+    openModal = () => {
+        this.setState({
+            showMoadl: true
+        })
+    }
+    //关闭弹框
+    onClose = (value) => {
+        this.setState({
+            showMoadl: value
+        })
+    }
     componentWillMount() {
 
     }
@@ -54,13 +70,13 @@ export class Appearance extends React.Component {
         this.getList();
     }
     render() {
-        const { listData } = this.state;
+        const { listData, imgDomain } = this.state;
         return (
             <div className="appearance_list" >
                 <div className="list_wrap">
                     {
                         listData.map((item, index) => (
-                            <div className="appearance_item" key={index}  style={{ backgroundImage: "url('http://piy3e9xq1.bkt.clouddn.com/FrPxSlEFS35bArq9YbZUxMqBXtwq')" }} >
+                            <div className="appearance_item" onClick={this.openModal} key={index} style={{ backgroundImage: `url(${imgDomain + item.cover})` }} >
                                 <div className="au_description">
                                     <h4>
                                         <span>{item.appearanceTitle}</span>
@@ -95,6 +111,19 @@ export class Appearance extends React.Component {
                 <div className="poster_btn" onClick={this.toPublish} >
                     <Icon type="plus" style={{ color: "#fff", fontSize: "20px" }} />
                 </div>
+                <CSSTransition
+                    in={this.state.showMoadl}
+                    classNames="fade"
+                    timeout={500}
+                    onEnter={(el) => {
+                        el.style.display = 'flex'
+                    }}
+                    onExited={(el) => {
+                        el.style.display = 'none'
+                    }}
+                >
+                    <AppearanceModal onClose={this.onClose} />
+                </CSSTransition>
             </div>
         )
     }

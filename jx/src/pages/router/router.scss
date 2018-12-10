@@ -23,7 +23,7 @@ html body {
         align-items: center;
         height: 40px;
         .nav_item {
-            color:#333;
+            color: #333;
             font-size: 14px;
             margin-right: 30px;
             cursor: pointer;
@@ -44,11 +44,43 @@ html body {
     }
 }
 
+.content {}
+
 .user_menu_list_router {
     .menu_item {
         cursor: pointer;
         &:hover {
             color: $red;
         }
+    }
+}
+
+.footer_c {
+    padding-top: 30px;
+    border-top: 1px solid #e5e5e5;
+    padding-bottom: 20px;
+    p {
+        text-align: center;
+        margin-bottom: 0;
+        .mail {
+            background: #ff005e;
+            font-size: 14px;
+            color: #fff;
+            padding: 2px 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .powered_by {
+            letter-spacing: 1px;
+        }
+    }
+}
+
+.example_img_wrap {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    .example_img {
+        max-width: 100%;
     }
 }

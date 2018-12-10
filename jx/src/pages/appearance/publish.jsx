@@ -25,6 +25,9 @@ export class Publish extends React.Component {
         },
         submitLoading: false,
         scale: 1,        //封面裁剪缩放值
+        coverImg: "",           //封面图
+        willSaveCover: '',       //要保存的封面图
+        imgDomain: sessionStorage.getItem("imgDomain") || '',
     }
     refresh = () => {
         this.getShuoList();
@@ -38,7 +41,9 @@ export class Publish extends React.Component {
     }
     //图片有变回的回调
     handleChange = ({ fileList, file, event }) => {
-        this.setState({ fileList });
+        this.setState({
+            fileList,
+        });
     }
     //关闭浏览大图弹框
     previewImgCancel = (e) => {
@@ -87,7 +92,10 @@ export class Publish extends React.Component {
             headers: { 'Content-Type': 'application/octet-stream', 'Authorization': 'UpToken ' + token },
             data: picBase
         }).then((res) => {
-            console.log(res)
+            this.setState({
+                coverImg: null,
+                willSaveCover: res.data.key
+            })
         })
         // let res = await _axios("post", url, {
         //     token: this.state.token,
@@ -103,7 +111,7 @@ export class Publish extends React.Component {
             }
         })
         let postData = {
-            cover: "http://piy3e9xq1.bkt.clouddn.com/FrPxSlEFS35bArq9YbZUxMqBXtwq",
+            cover: this.state.willSaveCover,
             imgList: imgs,
             appearanceTitle: this.state.formData.appearanceTitle,
             appearanceName: this.state.formData.appearanceName,
@@ -114,6 +122,10 @@ export class Publish extends React.Component {
         }
         if (!postData.appearanceTitle) {
             message.warning('标题不能为空');
+            return false;
+        }
+        if (postData.imgList.length == 0) {
+            message.warning('至少上传一张图片');
             return false;
         }
         this.setState({
@@ -128,6 +140,22 @@ export class Publish extends React.Component {
             message.success('发布成功');
         }
     }
+
+    //长传封面
+    coverChange = (info) => {
+        if (info.file.status !== 'uploading') {
+            console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+            console.log(`${info.file.name} file uploaded successfully`);
+            this.setState({
+                coverImg: info.file.response.key,
+                willSaveCover: null
+            })
+        } else if (info.file.status === 'error') {
+            console.log(`${info.file.name} file upload failed.`);
+        }
+    }
     componentWillMount() {
 
     }
@@ -138,11 +166,11 @@ export class Publish extends React.Component {
         const data = {
             token: this.state.token
         }
-        const { previewVisible, previewImage, fileList } = this.state;
+        const { previewVisible, previewImage, fileList, imgDomain } = this.state;
         const uploadButton = (
             <div>
                 <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
+                <div className="ant-upload-text">上传图片</div>
             </div>
         );
         return (
@@ -150,28 +178,51 @@ export class Publish extends React.Component {
                 <div className="publish_inner">
                     <div className="modal_header" >分享外观</div>
                     <div className="modal_inner" >
-                        <AvatarEditor
-                            ref={this.setEditorRef}
-                            crossOrigin='anonymous'
-                            image="http://piy3e9xq1.bkt.clouddn.com/FrPxSlEFS35bArq9YbZUxMqBXtwq"
-                            width={360}
-                            height={480}
-                            border={50}
-                            color={[255, 255, 255, 0.6]} // RGBA
-                            scale={this.state.scale}
-                            rotate={0}
-                        />
-                        <div className="cover_btns" >
-                            <Slider
-                                onChange={this.sliderChange}
-                                min={1}
-                                max={2}
-                                step={0.01}
-                                value={this.state.scale}
-                                style={{ width: 280, }}
-                            />
-                            <Button type="primary" onClick={this.coverSave} >保存</Button>
+                        <div className="cover_btns_t" >
+                            <Upload
+                                action="http://up-z2.qiniup.com"
+                                onChange={this.coverChange}
+                                data={data}
+                                showUploadList={false}
+                            >
+                                <Button>
+                                    <Icon type="upload" />上传封面
+                                </Button>
+                            </Upload>
                         </div>
+                        <div className="cover_c" >
+                            {!this.state.willSaveCover ?
+                                <AvatarEditor
+                                    ref={this.setEditorRef}
+                                    crossOrigin='anonymous'
+                                    image={imgDomain + this.state.coverImg}
+                                    width={360}
+                                    height={480}
+                                    border={50}
+                                    color={[255, 255, 255, 0.6]} // RGBA
+                                    scale={this.state.scale}
+                                    rotate={0}
+                                /> :
+                                <img className="cover_show_img" src={imgDomain + this.state.willSaveCover} alt="" />
+                            }
+                        </div>
+                        {this.state.coverImg ?
+                            <div className="cover_btns" >
+                                <div className="cover_btns_i" >
+                                    <Slider
+                                        onChange={this.sliderChange}
+                                        min={1}
+                                        max={2}
+                                        step={0.01}
+                                        value={this.state.scale}
+                                        style={{ width: 280, }}
+                                    />
+                                </div>
+                                <div className="cover_btns_i"  >
+                                    <Button type="primary" onClick={this.coverSave} >保存</Button>
+                                </div>
+                            </div> : null
+                        }
                         <Upload
                             action="http://up-z2.qiniup.com"
                             listType="picture-card"
@@ -186,8 +237,10 @@ export class Publish extends React.Component {
                             visible={previewVisible}
                             footer={null}
                             onCancel={this.previewImgCancel}
-                            width="800px" >
-                            <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                            width="800px"
+                            className="example_img_wrap"
+                        >
+                            <img alt="example" className="example_img" src={previewImage} />
                         </Modal>
                         <div className="inputList">
                             <div className="input_item_wrap">

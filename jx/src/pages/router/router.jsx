@@ -49,7 +49,8 @@ class App extends React.Component {
                     path: "/appearance"
                 },
             ],
-            userInfo: getUser() || {}
+            userInfo: getUser() || {},
+            contentMinH: ''
         }
     }
 
@@ -70,6 +71,14 @@ class App extends React.Component {
     async logoOut() {
         clearAllCookie();
         message.success('登出成功');
+    }
+    componentWillMount() {
+
+    }
+    componentDidMount() {
+        this.setState({
+            contentMinH: document.documentElement.clientHeight-60-107
+        })
     }
     render() {
         const { navList } = this.state
@@ -100,7 +109,7 @@ class App extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="content" >
+                <div className="content" style={{ minHeight: this.state.contentMinH }} >
                     <Switch>
                         <Route path="/home" component={Home} />
                         <Route path="/discover" component={Discover} />
@@ -111,7 +120,18 @@ class App extends React.Component {
                         <Route path="/fb" component={Fb} />
                     </Switch>
                 </div>
-            </div>
+                <div className="footer_c">
+                    <p >
+                        <span className="mail" >
+                            版权、合作：450008307@qq.com
+                        </span>
+                    </p>
+                    <p className="powered_by" > j3wg © 2018 Powered by
+                        <span style={{ color: "#f0d055" }} >Koa</span> +
+                        <span style={{ color: "#59cfdc" }}  >React</span>.
+                    </p>
+                </div>
+            </div >
         )
     }
 }
