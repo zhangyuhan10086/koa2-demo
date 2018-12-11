@@ -31,6 +31,14 @@ const appearance = new Schema({
         replyContent: {
             type: String,
             required: true,
+        },
+        createdAt: {
+            type: Number,
+            default: Date.now()
+        },
+        updatedAt: {
+            type: Number,
+            default: Date.now()
         }
     }],
     meta: {

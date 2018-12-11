@@ -60,3 +60,24 @@ export const clearAllCookie = () => {
             document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
     }
 }
+
+// export const hasClass = (elem, cls) => {
+//     cls = cls || '';
+//     if (cls.replace(/\s/g, '').length == 0) return false; //当cls没有参数时，返回false
+//     return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+// }
+
+
+// export const addClass = (obj, cls) => {
+//     if (!hasClass(ele, cls)) {
+//         ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
+//     }
+// }
+
+// export const removeClass = (obj, cls) => {
+//     var obj_class = ' ' + obj.className + ' '; //获取 class 内容, 并在首尾各加一个空格. ex) 'abc    bcd' -> ' abc    bcd '
+//     obj_class = obj_class.replace(/(\s+)/gi, ' '), //将多余的空字符替换成一个空格. ex) ' abc    bcd ' -> ' abc bcd '
+//         removed = obj_class.replace(' ' + cls + ' ', ' '); //在原来的 class 替换掉首尾加了空格的 class. ex) ' abc bcd ' -> 'bcd '
+//     var removed = removed.replace(/(^\s+)|(\s+$)/g, ''); //去掉首尾空格. ex) 'bcd ' -> 'bcd'
+//     obj.className = removed; //替换原来的 class.
+// }

@@ -7,7 +7,9 @@ const {
 } = require("../lib/decorator")
 const {
     publishAppearance,
-    getAllAppearance
+    getAllAppearance,
+    reply,
+    getDetail
 } = require("../service/appearance");
 
 @Controller("/api/appearance")
@@ -25,7 +27,7 @@ export default class AppearanceController {
             appearanceName
         } = ctx.request.body;
         let publisherId = ctx.session.user._id;
-        let res = await publishAppearance(publisherId, cover, imgList,appearanceTitle,appearanceName);
+        let res = await publishAppearance(publisherId, cover, imgList, appearanceTitle, appearanceName);
         ctx.body = {
             success: true,
             remark: ""
@@ -38,6 +40,55 @@ export default class AppearanceController {
             success: true,
             remark: "",
             result: res
+        }
+    }
+
+    @Post("/reply")
+    @Auth
+    @Required({
+        body: ['id', 'replyContent']
+    })
+    async reply(ctx, next) {
+        let {
+            id,
+            replyContent,
+        } = ctx.request.body;
+        let publisherId = ctx.session.user._id;
+        try {
+            let res = await reply(publisherId, id, replyContent);
+            ctx.body = {
+                success: true,
+                remark: "",
+                result: ""
+            }
+        } catch (err) {
+            ctx.body = {
+                success: false,
+                remark: err,
+                result: ""
+            }
+        }
+    }
+
+    @Get("/detail")
+    async getDetailz(ctx, next) {
+        let {
+            id
+        } = ctx.request.query
+
+        try {
+            let res = await getDetail(id);
+            ctx.body = {
+                success: true,
+                remark: "",
+                result: res
+            }
+        } catch (err) {
+            ctx.body = {
+                success: false,
+                remark: err,
+                result: ""
+            }
         }
     }
 }

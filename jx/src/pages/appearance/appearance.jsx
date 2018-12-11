@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { Avatar, Icon, Modal, message } from "antd"
 import _axios from '../../utils/_axios'
-import { dateTimeFormat, getUser, isLogin } from "../../utils/common"
+import { dateTimeFormat, getUser, isLogin, } from "../../utils/common"
 
 import { CSSTransition } from 'react-transition-group';
 
@@ -52,16 +52,23 @@ export class Appearance extends React.Component {
         })
     }
     //打开大图弹框
-    openModal = () => {
-        this.setState({
-            showMoadl: true
-        })
+    openModal = (item) => {
+        this.childModal.resetIndex();
+        this.childModal.openModal(item);
+        this.setState(
+            {
+                showMoadl: true
+            }
+        )
     }
     //关闭弹框
     onClose = (value) => {
         this.setState({
             showMoadl: value
         })
+    }
+    onRef = (ref) => {
+        this.childModal = ref
     }
     componentWillMount() {
 
@@ -71,12 +78,13 @@ export class Appearance extends React.Component {
     }
     render() {
         const { listData, imgDomain } = this.state;
+        let currentIndex = 0;
         return (
             <div className="appearance_list" >
                 <div className="list_wrap">
                     {
                         listData.map((item, index) => (
-                            <div className="appearance_item" onClick={this.openModal} key={index} style={{ backgroundImage: `url(${imgDomain + item.cover})` }} >
+                            <div className="appearance_item" onClick={() => this.openModal(item)} key={index} style={{ backgroundImage: `url(${imgDomain + item.cover})` }} >
                                 <div className="au_description">
                                     <h4>
                                         <span>{item.appearanceTitle}</span>
@@ -116,13 +124,15 @@ export class Appearance extends React.Component {
                     classNames="fade"
                     timeout={500}
                     onEnter={(el) => {
-                        el.style.display = 'flex'
+                        el.style.display = 'flex';
+                        document.body.classList.add("body-fixed", 'scroll-fixed');
                     }}
                     onExited={(el) => {
-                        el.style.display = 'none'
+                        el.style.display = 'none';
+                        document.body.classList.remove("body-fixed", 'scroll-fixed');
                     }}
                 >
-                    <AppearanceModal onClose={this.onClose} />
+                    <AppearanceModal onRef={this.onRef} onClose={this.onClose} />
                 </CSSTransition>
             </div>
         )

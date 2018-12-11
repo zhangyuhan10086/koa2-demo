@@ -15,8 +15,57 @@ export const publishAppearance = async (publisherId, cover, imgList, appearanceT
 export const getAllAppearance = async () => {
     let query = {};
     const appearanceList = await Appearance.find(query).populate({
-        path: 'publisherId',
-        model: 'User',
-    }).sort('-meta.updatedAt')
+            path: 'publisherId',
+            model: 'User',
+        })
+        .populate({
+            path: 'reply.replyId',
+            model: 'User',
+        })
+        .sort('-meta.updatedAt');
     return appearanceList;
+}
+export const getDetail = async (id) => {
+    let query = {
+        _id:id
+    };
+    const appearanceItem = await Appearance.find(query).populate({
+            path: 'publisherId',
+            model: 'User',
+        })
+        .populate({
+            path: 'reply.replyId',
+            model: 'User',
+        })
+        .sort('-meta.updatedAt');
+    return appearanceItem;
+}
+
+
+export const reply = async (publisherId, id, replyContent) => {
+    let query = {
+        _id: id
+    };
+    let replyItem = {
+        replyId: publisherId,
+        replyContent: replyContent,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+    };
+    return new Promise(function (resolve, reject) {
+        Appearance.updateOne(query, {
+            $push: {
+                reply: replyItem
+            }
+        }, {
+
+        }, function (err, doc) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(doc)
+            }
+        });
+    });
+
 }
