@@ -131,13 +131,15 @@ export class Publish extends React.Component {
         this.setState({
             submitLoading: true
         });
-        console.log(postData)
         let res = await _axios("post", "/api/appearance/publish", postData);
-        this.setState({
-            submitLoading: false
-        })
         if (res.success) {
             message.success('发布成功');
+            setTimeout(() => {
+                this.setState({
+                    submitLoading: false
+                })
+                this.props.history.push(`/appearance`)
+            }, 1000)
         }
     }
 
@@ -160,7 +162,7 @@ export class Publish extends React.Component {
 
     }
     componentDidMount() {
-
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
     render() {
         const data = {

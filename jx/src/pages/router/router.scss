@@ -1,4 +1,5 @@
 @import "../../scss/common.scss";
+
 html body {
     background: #f0f0f0;
 }
@@ -8,6 +9,12 @@ html body {
     height: 60px;
     display: flex;
     align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.1);
+    z-index: 1000;
     .console {
         position: relative;
         left: 0;
@@ -15,6 +22,7 @@ html body {
         width: 20px;
         height: 20px;
     }
+
     .header_inner {
         width: 1120px;
         margin: 0 auto;
@@ -22,12 +30,14 @@ html body {
         justify-content: space-between;
         align-items: center;
         height: 40px;
+
         .nav_item {
             color: #333;
             font-size: 14px;
             margin-right: 30px;
             cursor: pointer;
         }
+
         .hearder_right {
             .header_img {
                 cursor: pointer;
@@ -36,6 +46,7 @@ html body {
                 border-radius: 50%;
                 background: #fff;
                 overflow: hidden;
+
                 img {
                     width: 100%;
                 }
@@ -44,11 +55,14 @@ html body {
     }
 }
 
-.content {}
+.content {
+    padding-top: 60px;
+}
 
 .user_menu_list_router {
     .menu_item {
         cursor: pointer;
+
         &:hover {
             color: $red;
         }
@@ -59,9 +73,11 @@ html body {
     padding-top: 30px;
     border-top: 1px solid #e5e5e5;
     padding-bottom: 20px;
+
     p {
         text-align: center;
         margin-bottom: 0;
+
         .mail {
             background: #ff005e;
             font-size: 14px;
@@ -70,6 +86,7 @@ html body {
             display: inline-block;
             margin-bottom: 10px;
         }
+
         .powered_by {
             letter-spacing: 1px;
         }
@@ -80,6 +97,7 @@ html body {
     display: flex;
     justify-content: center;
     align-content: center;
+
     .example_img {
         max-width: 100%;
     }

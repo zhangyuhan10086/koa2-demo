@@ -39,6 +39,9 @@ export class AppearanceModal extends React.Component {
     }
     //打开弹框
     openModal = (data) => {
+        if (data.imgList.indexOf(data.cover) < 0) {
+            data.imgList.unshift(data.cover)
+        }
         this.setState({
             modalData: data
         });
@@ -48,10 +51,14 @@ export class AppearanceModal extends React.Component {
     getDetail = async (id) => {
         let res = await _axios("get", "/api/appearance/detail", { id });
         if (res.success) {
+            let data = res.result[0];
+            if (data.imgList.indexOf(data.cover) < 0) {
+                data.imgList.unshift(data.cover)
+            }
             this.setState({
-                modalData: res.result[0],
+                modalData: data,
             }, () => {
-                console.log(this.state.replyContent)
+
             });
         }
     }
@@ -127,7 +134,7 @@ export class AppearanceModal extends React.Component {
                                 <div className="reply_item" key={index} >
                                     <div className="who">
                                         <span>{item.replyId.nickname} </span>
-                                        <span>{dateTimeFormat(item.createdAt)}</span>
+                                        <span>{dateTimeFormat(item.createdAt)} {index+1}楼</span>
                                     </div>
                                     <div className="say_what">
                                         {item.replyContent}

@@ -1,13 +1,25 @@
 @import "../../scss/common.scss";
 $bg: rgba(0, 0, 0, 0.5);
+
 .appearance_list {
     width: $contentWidth;
     margin: 0 auto;
+
+    .search_items {
+        padding-top: 20px;
+        display: flex;
+    }
+
     .list_wrap {
         display: flex;
         flex-wrap: wrap;
         padding-top: 20px;
+
         .appearance_item {
+            box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 4px;
+            overflow: hidden;
             width: 360px;
             height: 480px;
             margin-right: 20px;
@@ -18,33 +30,40 @@ $bg: rgba(0, 0, 0, 0.5);
             flex-direction: column;
             cursor: pointer;
             justify-content: space-between;
+
             &:nth-of-type(3n) {
                 margin-right: 0;
             }
+
             .au_description {
                 width: 100%;
                 background: $bg;
                 padding: 10px 0;
+
                 h4 {
                     padding: 0 20px;
                     font-size: 12px;
                     color: $white2;
                     display: flex;
                     justify-content: space-between;
+
                     span {
                         color: $white2;
                     }
                 }
+
                 .date {
                     font-size: 12px;
                     padding: 0 20px;
                     color: $white;
                     display: flex;
                     justify-content: space-between;
+
                     .heart {
                         span {
                             padding-right: 4px;
                         }
+
                         img {
                             width: 22px;
                             cursor: pointer;
@@ -52,30 +71,39 @@ $bg: rgba(0, 0, 0, 0.5);
                     }
                 }
             }
+
             .comment_wrap {
                 background: $bg;
                 padding: 10px 20px;
+
                 .comment_item {
-                    font-size: 11px;
+                    font-size: 12px;
                     color: $white;
                     display: flex;
+
                     .reply_au {
-                        padding-right: 10px;
                         flex-shrink: 0;
                     }
+
                     .reply_font {
                         @include textover;
                     }
                 }
+
                 .more {
                     font-size: 16px;
                     line-height: 16px;
                     padding-left: 1px;
                     color: $white;
+
+                    span {
+                        font-size: 12px;
+                    }
                 }
             }
         }
     }
+
     .poster_btn {
         height: 40px;
         width: 100%;
@@ -85,25 +113,31 @@ $bg: rgba(0, 0, 0, 0.5);
         justify-content: center;
         cursor: pointer;
     }
+
     .fade-enter,
     .fade-appear {
         opacity: 0;
     }
+
     .fade-enter-active,
     .fade-apper-active {
         opacity: 1;
         transition: opacity 0.6s ease;
     }
+
     .fade-enter-done {
         opacity: 1;
     }
+
     .fade-exit {
         opacity: 1;
     }
+
     .fade-exit-active {
         opacity: 0;
         transition: opacity 0.6s ease;
     }
+
     .fade-exit-done {
         opacity: 0;
     }

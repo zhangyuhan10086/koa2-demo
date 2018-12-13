@@ -1,9 +1,8 @@
 import "./appearance.scss";
 import React from "react";
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
-import { Avatar, Icon, Modal, message } from "antd"
+import { Select, Icon, message, Input, Button } from "antd"
 import _axios from '../../utils/_axios'
-import { dateTimeFormat, getUser, isLogin, } from "../../utils/common"
+import { dateTimeFormat, boySizeMap, isLogin, } from "../../utils/common"
 
 import { CSSTransition } from 'react-transition-group';
 
@@ -11,6 +10,7 @@ import AppearanceModal from "./appearanceModal"
 
 const xinImg = require('../../statics/xin.svg')
 const xin2Img = require('../../statics/xinshi.svg')
+
 
 export class Appearance extends React.Component {
     constructor(props) {
@@ -70,6 +70,10 @@ export class Appearance extends React.Component {
     onRef = (ref) => {
         this.childModal = ref
     }
+    //选择体型
+    selectBoySize = (value) => {
+        console.log(value)
+    }
     componentWillMount() {
 
     }
@@ -77,10 +81,22 @@ export class Appearance extends React.Component {
         this.getList();
     }
     render() {
+        const { Option } = Select;
         const { listData, imgDomain } = this.state;
-        let currentIndex = 0;
+
         return (
             <div className="appearance_list" >
+                <div className="search_items" >
+                    <Select defaultValue="" style={{ width: '130px' }} onChange={this.selectBoySize}>
+                        {
+                            boySizeMap.map((option, index) => (
+                                <Option value={option.key} key={index} >{option.label}</Option>
+                            ))
+                        }
+                    </Select>
+                    <Input placeholder="关键字" style={{ width: '330px', marginLeft: "20px" }} />
+                    <Button style={{ marginLeft: "20px" }} >搜索</Button>
+                </div>
                 <div className="list_wrap">
                     {
                         listData.map((item, index) => (
@@ -102,15 +118,25 @@ export class Appearance extends React.Component {
                                     </div>
                                 </div>
                                 <div className="comment_wrap">
-                                    <div className="comment_item">
-                                        <div className="reply_au">长明宇:</div>
-                                        <div className="reply_font">这个外观真好看</div>
-                                    </div>
-                                    <div className="comment_item">
-                                        <div className="reply_au">杀伐:</div>
-                                        <div className="reply_font">土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊土豪土豪啊啊啊啊啊</div>
-                                    </div>
-                                    <div className="more" >. . .</div>
+                                    {
+                                        item.reply.map((replyItem, index2) => {
+                                            if (index2 <= 1) {
+                                                return (
+                                                    <div className="comment_item" key={index2} >
+                                                        <div className="reply_au">{replyItem.replyId.nickname}：</div>
+                                                        <div className="reply_font">{replyItem.replyContent}</div>
+                                                    </div>
+                                                )
+                                            }
+                                        })
+
+                                    }
+                                    {
+                                        item.reply.length > 2 ? <div className="more" >. . . <span>{item.reply.length}条评论</span>   </div> : null
+                                    }
+                                    {
+                                        item.reply.length == 0 ? <div className="more" >暂无评论</div> : null
+                                    }
                                 </div>
                             </div>
                         ))

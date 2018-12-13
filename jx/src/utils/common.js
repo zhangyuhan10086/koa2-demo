@@ -36,7 +36,7 @@ export const setCookie = (name, value, days) => {
 }
 
 export const getCookie = (name) => {
-    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");　　
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
 }
 
@@ -60,6 +60,24 @@ export const clearAllCookie = () => {
             document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
     }
 }
+
+export const boySizeMap = [{
+    key: '',
+    label: '全部',
+}, {
+    key: '1',
+    label: '成男',
+}, {
+    key: '2',
+    label: '成女',
+}, {
+    key: '3',
+    label: '萝莉',
+}, {
+    key: '4',
+    label: '正太',
+}]
+
 
 // export const hasClass = (elem, cls) => {
 //     cls = cls || '';
