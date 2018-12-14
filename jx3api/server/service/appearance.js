@@ -12,8 +12,17 @@ export const publishAppearance = async (publisherId, cover, imgList, appearanceT
     await appearanceItem.save();
 }
 
-export const getAllAppearance = async () => {
-    let query = {};
+export const getAllAppearance = async (start, limit, keyword) => {
+    const reg = new RegExp(keyword, 'i') //不区分大小写
+    let query = {
+        $or: [{
+            appearanceTitle: {
+                $regex: reg
+            }
+        }, ],
+    };
+
+    const total = await Appearance.count(query);
     const appearanceList = await Appearance.find(query).populate({
             path: 'publisherId',
             model: 'User',
@@ -22,12 +31,19 @@ export const getAllAppearance = async () => {
             path: 'reply.replyId',
             model: 'User',
         })
-        .sort('-meta.updatedAt');
-    return appearanceList;
+        .sort('-meta.updatedAt')
+        .skip((start - 1) * limit)
+        .limit(limit);
+    return {
+        total,
+        currentPage: start,
+        results: appearanceList
+    };
+
 }
 export const getDetail = async (id) => {
     let query = {
-        _id:id
+        _id: id
     };
     const appearanceItem = await Appearance.find(query).populate({
             path: 'publisherId',

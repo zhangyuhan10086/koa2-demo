@@ -75,6 +75,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "node-sass": "^4.9.3"
   },
   "jest": {
@@ -116,6 +118,9 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      "babel-polyfill"
     ]
   },
   "proxy": "http://localhost:4455"

@@ -7,9 +7,11 @@
     top: 0;
     z-index: 1000;
     display: none;
+
     .exhibition_big_pic {
         position: relative;
         width: 100%;
+
         img {
             position: absolute;
             left: 0;
@@ -21,6 +23,7 @@
             max-height: 100%;
             display: block;
         }
+
         .arrow_l {
             position: absolute;
             cursor: pointer;
@@ -30,10 +33,12 @@
             color: #fff;
             transition: all 0.3s;
             transform: translateY(-50%);
+
             &:hover {
                 font-size: 60px;
             }
         }
+
         .arrow_r {
             position: absolute;
             cursor: pointer;
@@ -43,11 +48,13 @@
             color: #fff;
             transition: all 0.3s;
             transform: translateY(-50%);
+
             &:hover {
                 font-size: 60px;
             }
         }
     }
+
     .right_control {
         flex-shrink: 0;
         width: 340px;
@@ -55,40 +62,49 @@
         padding: 10px;
         background: #fff;
         overflow-y: auto;
+
         .author {
             display: flex;
+
             .nick_name {
                 padding-left: 10px;
+
                 span {
                     display: block;
                     font-weight: 500;
                 }
             }
         }
+
         h3 {
             padding-top: 20px;
         }
     }
+
     .reply_list {
         .reply_item {
             padding-bottom: 8px;
             margin-bottom: 18px;
             border-bottom: 1px solid #e5e5e5;
+
             .who {
                 display: flex;
                 justify-content: space-between;
                 margin-bottom: 5px;
+
                 span {
                     display: block;
                     font-size: 12px;
                 }
             }
+
             .say_what {
                 padding-left: 10px;
                 font-size: 12px;
             }
         }
     }
+
     .close_modal {
         position: absolute;
         right: 20px;

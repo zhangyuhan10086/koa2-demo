@@ -1,6 +1,6 @@
 import "./appearance.scss";
 import React from "react";
-import { Select, Icon, message, Input, Button } from "antd"
+import { Select, Icon, message, Input, Button, Pagination } from "antd"
 import _axios from '../../utils/_axios'
 import { dateTimeFormat, boySizeMap, isLogin, } from "../../utils/common"
 
@@ -20,6 +20,10 @@ export class Appearance extends React.Component {
             listData: [],
             imgDomain: sessionStorage.getItem("imgDomain") || '',
             showMoadl: false,
+            limit: 9,        //每页条数
+            currentPage: 1,     //当前页数
+            total: 0,           //总页数
+            keyword: '',     //关键字
         }
     }
     cancel = (value) => {
@@ -44,11 +48,24 @@ export class Appearance extends React.Component {
     toPublish = () => {
         this.props.history.push(`/publish`)
     }
-    //获取列表
-    getList = async () => {
-        let res = await _axios("get", "/api/appearance/getAll");
+    //关键字双向
+    keywordChange = (value) => {
         this.setState({
-            listData: res.result
+            keyword: value
+        })
+    }
+    //获取列表
+    getList = async (page) => {
+        let res = await _axios("get", "/api/appearance/getAll", {
+            start: page,
+            limit: this.state.limit,
+            keyword: this.state.keyword
+        });
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+        this.setState({
+            listData: res.result.results,
+            total: res.result.total,
+            currentPage: res.result.currentPage
         })
     }
     //打开大图弹框
@@ -74,15 +91,23 @@ export class Appearance extends React.Component {
     selectBoySize = (value) => {
         console.log(value)
     }
+    //翻页
+    selectPage = (page) => {
+        this.getList(page)
+    }
+    //搜索
+    search = () => {
+        this.getList(1)
+    }
     componentWillMount() {
 
     }
     componentDidMount() {
-        this.getList();
+        this.getList(this.state.currentPage);
     }
     render() {
         const { Option } = Select;
-        const { listData, imgDomain } = this.state;
+        const { listData, imgDomain, total, limit, currentPage } = this.state;
 
         return (
             <div className="appearance_list" >
@@ -94,8 +119,8 @@ export class Appearance extends React.Component {
                             ))
                         }
                     </Select>
-                    <Input placeholder="关键字" style={{ width: '330px', marginLeft: "20px" }} />
-                    <Button style={{ marginLeft: "20px" }} >搜索</Button>
+                    <Input value={this.state.keyword} onChange={e => this.keywordChange(e.target.value)} placeholder="关键字" style={{ width: '330px', marginLeft: "20px" }} />
+                    <Button style={{ marginLeft: "20px" }} onClick={this.search} >搜索</Button>
                 </div>
                 <div className="list_wrap">
                     {
@@ -141,6 +166,9 @@ export class Appearance extends React.Component {
                             </div>
                         ))
                     }
+                </div>
+                <div className="pagination" >
+                    <Pagination onChange={this.selectPage} current={currentPage} pageSize={limit} total={total} />
                 </div>
                 <div className="poster_btn" onClick={this.toPublish} >
                     <Icon type="plus" style={{ color: "#fff", fontSize: "20px" }} />

@@ -1,15 +1,39 @@
 html {}
 
-body, dl, dt, dd, ul, ol, li, pre, form, fieldset, input, p, blockquote, th, td {
+html a:focus {
+    text-decoration: none;
+}
+
+body,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+input,
+p,
+blockquote,
+th,
+td {
     font-weight: 400;
     margin: 0;
     padding: 0;
 }
-a{
+
+a {
     text-decoration: none;
 }
 
-h1, h2, h3, h4, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h4,
+h5 {
     margin: 0;
     padding: 0;
 }
@@ -17,8 +41,8 @@ h1, h2, h3, h4, h4, h5 {
 body {
     font-family: Microsoft YaHei;
     font-size: 12px;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
     text-align: left;
 }
 
@@ -30,7 +54,8 @@ table {
     border-collapse: collapse;
 }
 
-fieldset, img {
+fieldset,
+img {
     border: 0 none;
 }
 
@@ -48,7 +73,12 @@ legend {
     display: none;
 }
 
-address, caption, em, strong, th, i {
+address,
+caption,
+em,
+strong,
+th,
+i {
     font-style: normal;
     font-weight: 400;
 }
@@ -67,21 +97,27 @@ hr {
     overflow: hidden;
 }
 
-ol, ul {
+ol,
+ul {
     list-style-image: none;
     list-style-position: outside;
     list-style-type: none;
 }
 
-caption, th {
+caption,
+th {
     text-align: left;
 }
 
-q:before, q:after, blockquote:before, blockquote:after {
+q:before,
+q:after,
+blockquote:before,
+blockquote:after {
     content: ””;
 }
 
 
-html,body{
+html,
+body {
     height: auto !important;
 }

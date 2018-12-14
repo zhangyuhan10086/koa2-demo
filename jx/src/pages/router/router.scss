@@ -13,8 +13,9 @@ html body {
     left: 0;
     top: 0;
     width: 100%;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
     z-index: 1000;
+
     .console {
         position: relative;
         left: 0;
@@ -36,6 +37,10 @@ html body {
             font-size: 14px;
             margin-right: 30px;
             cursor: pointer;
+
+            &:hover {
+                color: #ff6fa2;
+            }
         }
 
         .hearder_right {

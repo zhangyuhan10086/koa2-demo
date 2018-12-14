@@ -112,8 +112,13 @@ export class AppearanceModal extends React.Component {
                             })
                             : null
                     }
-                    <Icon className="arrow_l" type="arrow-left" onClick={() => this.changeCurrentIndex(-1)} />
-                    <Icon className="arrow_r" type="arrow-right" onClick={() => this.changeCurrentIndex(1)} />
+                    <div className="arrow_l" >
+                        <Icon type="arrow-left" onClick={() => this.changeCurrentIndex(-1)} />
+                    </div>
+                    <div className="arrow_r" >
+                        <Icon type="arrow-right" onClick={() => this.changeCurrentIndex(1)} />
+                    </div>
+
                 </div>
                 <div className="right_control">
                     <h2>发布者</h2>
@@ -134,7 +139,7 @@ export class AppearanceModal extends React.Component {
                                 <div className="reply_item" key={index} >
                                     <div className="who">
                                         <span>{item.replyId.nickname} </span>
-                                        <span>{dateTimeFormat(item.createdAt)} {index+1}楼</span>
+                                        <span>{dateTimeFormat(item.createdAt)} {index + 1}楼</span>
                                     </div>
                                     <div className="say_what">
                                         {item.replyContent}

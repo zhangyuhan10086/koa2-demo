@@ -30,6 +30,12 @@ $bg: rgba(0, 0, 0, 0.5);
             flex-direction: column;
             cursor: pointer;
             justify-content: space-between;
+            transition: all 125ms cubic-bezier(0.02, 0.01, 0.47, 1);
+
+            &:hover {
+                transform: translate(0, -5px);
+                box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+            }
 
             &:nth-of-type(3n) {
                 margin-right: 0;
@@ -104,9 +110,17 @@ $bg: rgba(0, 0, 0, 0.5);
         }
     }
 
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 50px;
+        padding-top: 20px;
+    }
+
     .poster_btn {
         height: 40px;
         width: 100%;
+        margin-bottom: 40px;
         background: #21243a;
         display: flex;
         align-items: center;

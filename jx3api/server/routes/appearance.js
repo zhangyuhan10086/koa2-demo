@@ -35,7 +35,12 @@ export default class AppearanceController {
     }
     @Get("/getAll")
     async getAll(ctx, next) {
-        let res = await getAllAppearance();
+        let {
+            start,
+            limit,
+            keyword,
+        } = ctx.request.query;
+        let res = await getAllAppearance(parseInt(start), parseInt(limit), keyword);
         ctx.body = {
             success: true,
             remark: "",
