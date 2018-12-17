@@ -44,3 +44,28 @@ export async function checkPassword(username, password) {
         user
     }
 }
+
+export const upDateUser = async (id, headerImg, nickName, sex) => {
+    let query = {
+        _id: id
+    };
+    
+    return new Promise(function (resolve, reject) {
+        User.updateOne(query, {
+            $set: {
+                portraitUrl: headerImg,
+                nickname:nickName,
+                sex
+            }
+        }, {
+
+        }, function (err, doc) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(doc)
+            }
+        });
+    });
+
+}

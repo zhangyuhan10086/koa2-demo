@@ -11,6 +11,7 @@ import { getUser, clearAllCookie } from "../../utils/common"
 const content = (e) => {
     return (
         <div className="user_menu_list_router" >
+            <div className="menu_item" onClick={e.toSetting} >设置</div>
             <div className="menu_item" onClick={e.logoOut} >登出</div>
         </div>
     )
@@ -25,7 +26,7 @@ const MatchingTeam = AC(() => import("../matchingTeam/matchingTeam"))
 const Appearance = AC(() => import("../appearance/appearance"))
 const Publish = AC(() => import("../appearance/publish"))
 const Fb = AC(() => import("../console/fb/fb"))
-
+const Setting = AC(() => import("../user/setting"))
 
 class App extends React.Component {
     constructor(props) {
@@ -50,6 +51,7 @@ class App extends React.Component {
                 },
             ],
             userInfo: getUser() || {},
+            imgDomain: sessionStorage.getItem("imgDomain") || '',
             contentMinH: ''
         }
     }
@@ -68,6 +70,9 @@ class App extends React.Component {
     goOtherPage(path) {
 
     }
+    toSetting = () => {
+        this.props.history.push(`/setting`);
+    }
     async logoOut() {
         clearAllCookie();
         message.success('登出成功');
@@ -77,7 +82,7 @@ class App extends React.Component {
     }
     componentDidMount() {
         this.setState({
-            contentMinH: document.documentElement.clientHeight-60-107
+            contentMinH: document.documentElement.clientHeight - 60 - 107
         })
     }
     render() {
@@ -102,7 +107,7 @@ class App extends React.Component {
                             <Popover placement="bottom" content={content(this)}>
                                 <Avatar
                                     size="large"
-                                    src={this.state.userInfo.portraitUrl}
+                                    src={this.state.imgDomain + this.state.userInfo.portraitUrl}
                                     style={{ cursor: "pointer" }}
                                 />
                             </Popover>
@@ -118,6 +123,7 @@ class App extends React.Component {
                         <Route path="/appearance" component={Appearance} />
                         <Route path="/publish" component={Publish} />
                         <Route path="/fb" component={Fb} />
+                        <Route path="/setting" component={Setting} />
                     </Switch>
                 </div>
                 <div className="footer_c">

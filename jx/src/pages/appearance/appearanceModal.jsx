@@ -68,6 +68,9 @@ export class AppearanceModal extends React.Component {
             id: this.state.modalData._id,
             replyContent: this.state.replyContent
         };
+        if (!postData.replyContent) {
+            return false;
+        }
         this.setState({
             replyLoading: true
         })
@@ -98,7 +101,7 @@ export class AppearanceModal extends React.Component {
         let { modalData } = this.state;
 
         const { TextArea } = Input;
-        let authorHeaderUrl = modalData ? modalData.publisherId.portraitUrl : null
+        let authorHeaderUrl = modalData ? this.state.imgDomain + modalData.publisherId.portraitUrl : null
         let { currentIndex } = this.state
         return (
             <div className="appearance_modal" >

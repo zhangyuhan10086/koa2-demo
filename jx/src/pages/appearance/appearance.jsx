@@ -33,20 +33,17 @@ export class Appearance extends React.Component {
     refresh = () => {
         this.getShuoList();
     }
-    //点击发布按钮
-    clickPublish = () => {
+    //去发布页面
+    toPublish = () => {
+
         if (isLogin()) {
-            this.setState({ visible: true })
+            this.props.history.push(`/publish`);
         } else {
             message.warning('未登录，即将跳转至登录页面');
             setTimeout(() => {
                 this.props.history.push(`/login`)
             }, 1000)
         }
-    }
-    //去发布页面
-    toPublish = () => {
-        this.props.history.push(`/publish`)
     }
     //关键字双向
     keywordChange = (value) => {

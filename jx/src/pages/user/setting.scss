@@ -1,0 +1,91 @@
+@import "../../scss/common.scss";
+
+.setting_page {
+    width: 640px;
+    margin: 0 auto;
+
+    .publish_inner {
+        margin-top: 20px;
+        box-sizing: border-box;
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+        background: #fff;
+        border-radius: 4px;
+        box-sizing: border-box;
+
+        .inputList {
+            padding-top: 20px;
+
+            .input_item_wrap {
+                display: flex;
+                margin-bottom: 16px;
+                line-height: 32px;
+
+                .input_name {
+
+                    width: 150px;
+                    text-align: right;
+                    padding-right: 30px;
+                }
+
+                .input_item {
+                    width: 300px;
+                }
+            }
+        }
+
+        .modal_header {
+            box-sizing: border-box;
+            width: 100%;
+            height: 50px;
+            border-bottom: 1px solid #EBECED;
+            padding-left: 20px;
+            font-size: 18px;
+            line-height: 50px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .modal_inner {
+            padding: 20px;
+
+            .cover_btns_t {
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: center;
+            }
+
+            .cover_c {
+                display: flex;
+                justify-content: center;
+                height: 200px;
+
+                .cover_show_img {
+                    display: block;
+                    height: 100px;
+                    border-radius: 50%;
+                }
+
+                canvas {
+                    border: 1px solid #e5e5e5;
+                }
+            }
+
+            .cover_btns {
+                margin: 20px 0;
+                height: 90px;
+
+                .cover_btns_i {
+                    display: flex;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    .submit_btn_wrap {
+        display: flex;
+        padding-top: 40px;
+        justify-content: center;
+        padding-bottom: 40px;
+    }
+}

@@ -46,6 +46,7 @@ export const getUser = () => {
 }
 
 export const isLogin = () => {
+    console.log( getUser() )
     if (getUser() && getCookie('koa:sess')) {
         return true
     } else {

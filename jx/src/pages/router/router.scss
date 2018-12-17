@@ -67,7 +67,7 @@ html body {
 .user_menu_list_router {
     .menu_item {
         cursor: pointer;
-
+        padding:5px 0;
         &:hover {
             color: $red;
         }

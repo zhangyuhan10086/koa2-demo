@@ -63,7 +63,7 @@ export default class AppearanceController {
             let res = await reply(publisherId, id, replyContent);
             ctx.body = {
                 success: true,
-                remark: "",
+                remark: "发布成功",
                 result: ""
             }
         } catch (err) {

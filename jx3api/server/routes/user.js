@@ -9,7 +9,8 @@ const {
 const {
     getAllUsers,
     registerUser,
-    checkPassword
+    checkPassword,
+    upDateUser
 } = require("../service/user");
 
 @Controller("/api/user")
@@ -85,6 +86,35 @@ export default class UserController {
         }
     }
 
+    //修改
+    @Post("/update")
+    @Auth
+    @Required({
+        body: ['headerImg', 'nickName', 'sex']
+    })
+    async update(ctx, next) {
+        const {
+            headerImg,
+            nickName,
+            sex
+        } = ctx.request.body;
+        const id = ctx.session.user._id;
+        console.log( id )
+        try {
+            const res = await upDateUser(id, headerImg, nickName, sex);
+            ctx.body = {
+                success: true,
+                result: "",
+                remark: "修改成功"
+            }
+        } catch (err) {
+            ctx.body = {
+                success: false,
+                remark: err,
+                result: ""
+            }
+        }
+    }
 }
 
 

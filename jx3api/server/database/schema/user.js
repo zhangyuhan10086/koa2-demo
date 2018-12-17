@@ -23,6 +23,9 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    sex: {
+        type: String,
+    },
     portraitUrl: {
         type: String,
         required: true,

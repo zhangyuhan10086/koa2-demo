@@ -1,3 +1,5 @@
+import Promise from 'babel-polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import App from './pages/router/router';
@@ -14,6 +16,7 @@ import * as serviceWorker from './serviceWorker';
 
 
 import 'antd/dist/antd.css';
+
 
 
 const App = AC(() => import("./pages/router/router"));
