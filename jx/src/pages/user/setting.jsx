@@ -3,8 +3,11 @@ import React from "react";
 import { Upload, Radio, Icon, Input, Button, message, Slider } from "antd"
 import _axios from '../../utils/_axios'
 import axios from "axios"
+import PropTypes from 'prop-types';
+import { resetUserInfo } from "../../store/user/action"
+import { connect } from 'react-redux';
 
-import { } from "../../utils/common"
+import { setCookie, delCookie } from "../../utils/common"
 import AvatarEditor from 'react-avatar-editor'
 const RadioGroup = Radio.Group;
 
@@ -12,6 +15,9 @@ export class Publish extends React.Component {
     constructor(props) {
         super(props)
 
+    }
+    static propTypes = {
+        resetUserInfo: PropTypes.func.isRequired,
     }
     state = {
         token: sessionStorage.getItem("qiniuToken"),
@@ -25,9 +31,7 @@ export class Publish extends React.Component {
         willSaveCover: '',       //要保存的封面图
         imgDomain: sessionStorage.getItem("imgDomain") || '',
     }
-    refresh = () => {
-        this.getShuoList();
-    }
+
 
     //表单绑定
     inputChange = (value, key) => {
@@ -77,7 +81,7 @@ export class Publish extends React.Component {
         })
 
     }
-    //提交发布
+    //保存
     submit = async (e) => {
         let postData = {
             headerImg: this.state.willSaveCover,
@@ -92,8 +96,13 @@ export class Publish extends React.Component {
             submitLoading: true
         });
         let res = await _axios("post", "/api/user/update", postData);
+        this.setState({
+            submitLoading: false
+        });
         if (res.success) {
-            
+            message.success('保存成功');
+            //重置用户信息
+            this.getUserInfo();
         }
     }
 
@@ -120,11 +129,36 @@ export class Publish extends React.Component {
             formData
         })
     }
+    //获取用户信息
+    getUserInfo = async () => {
+        try {
+            let res = await _axios("get", "/api/user/userInfo");
+            if (res.success) {
+                setCookie('user', JSON.stringify(res.result), 1);
+                let formData = {
+                    nickName: res.result.nickname,
+                    sex: res.result.sex,
+                }
+                this.setState({
+                    formData,
+                    willSaveCover: res.result.portraitUrl
+                });
+                const { nickname, portraitUrl, roleCode, sex, username, _id } = res.result;
+                this.props.resetUserInfo(
+                    { nickname, portraitUrl, roleCode, sex, username, _id }
+                )
+            } else {
+                console.log(res.remark)
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     componentWillMount() {
-
     }
     componentDidMount() {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
+        this.getUserInfo();
     }
     render() {
         const data = {
@@ -207,7 +241,7 @@ export class Publish extends React.Component {
                     </div>
                 </div>
                 <div className="submit_btn_wrap" >
-                    <Button type="primary" onClick={this.submit} loading={this.state.submitLoading}   >保存</Button>
+                    <Button type="primary" onClick={this.submit} loading={this.state.submitLoading}  >保存</Button>
                 </div>
 
             </div>
@@ -215,4 +249,35 @@ export class Publish extends React.Component {
     }
 }
 
-export default Publish;
+export default connect(
+    //connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])  
+    // 只要store更新了就会调用mapStateToProps方法，
+    state => {
+        return {
+            test2: state.userInfo
+        }
+    },
+    {
+        resetUserInfo
+    }
+    // dispatch => {
+
+    //     // return {
+    //     //     newResetUserInfo: (name) => {
+    //     //         console.log(name)
+    //     //         resetUserInfo(dispatch, name)
+    //     //     }
+    //     // }
+    //     // return {
+    //     //     newResetUserInfo: (name) => {
+    //     //         dispatch({
+    //     //             type: 'USERINFORESTD',
+    //     //             data: {
+    //     //                 name
+    //     //             }
+    //     //         })
+    //     //     }
+    //     // }
+    // }
+
+)(Publish);

@@ -39,6 +39,14 @@ export const getCookie = (name) => {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     return (arr = document.cookie.match(reg)) ? unescape(arr[2]) : null;
 }
+//删除cookies 
+export const delCookie = (name) => {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = getCookie(name);
+    if (cval != null)
+        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+}
 
 export const getUser = () => {
     let user = JSON.parse(getCookie('user'))
@@ -46,7 +54,6 @@ export const getUser = () => {
 }
 
 export const isLogin = () => {
-    console.log( getUser() )
     if (getUser() && getCookie('koa:sess')) {
         return true
     } else {

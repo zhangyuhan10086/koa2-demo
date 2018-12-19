@@ -4,11 +4,17 @@ import { withRouter } from "react-router-dom";
 import { Form, Icon, Input, Button, Checkbox, message } from "antd";
 import _axios from '../../utils/_axios'
 import { setCookie } from '../../utils/common'
+import { connect } from 'react-redux';
+import { resetUserInfo } from "../../store/user/action"
+import PropTypes from 'prop-types';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
     constructor(props) {
         super(props)
+    }
+    static propTypes = {
+        resetUserInfo: PropTypes.func.isRequired,
     }
     state = {
         loading: false,
@@ -25,7 +31,11 @@ class LoginForm extends React.Component {
                     loading: false
                 })
                 if (res.success) {
-                    setCookie('user', JSON.stringify(res.user), 1)
+                    setCookie('user', JSON.stringify(res.user), 1);
+                    const { nickname, portraitUrl, roleCode, sex, username, _id } = res.user;
+                    this.props.resetUserInfo(
+                        { nickname, portraitUrl, roleCode, sex, username, _id }
+                    )
                     this.props.history.push(`/home`);
                 } else {
                     message.error(res.remark);
@@ -51,7 +61,7 @@ class LoginForm extends React.Component {
                             ]
                         })(
                             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="账号" />
-                            )
+                        )
                         }
                     </FormItem>
                     <FormItem>
@@ -59,7 +69,7 @@ class LoginForm extends React.Component {
                             rules: [{ required: true, message: '请填写您的密码' }],
                         })(
                             <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" />
-                            )}
+                        )}
                     </FormItem>
                     <FormItem>
                         {getFieldDecorator('remember', {
@@ -67,7 +77,7 @@ class LoginForm extends React.Component {
                             initialValue: true,
                         })(
                             <Checkbox>记住账号</Checkbox>
-                            )}
+                        )}
                         <a className="login-form-forgot" >忘记密码</a>
                         <Button type="primary" htmlType="submit" className="login-form-button" loading={this.state.loading}  >
                             登录
@@ -81,9 +91,24 @@ class LoginForm extends React.Component {
 }
 const WrapLoginForm = Form.create()(LoginForm)
 
-export default withRouter(WrapLoginForm);
 
-// export default WrapLoginForm;
+export default withRouter(
+    connect(
+        state => {
+            return {
+                test2: state.userInfo
+            }
+        },
+        {
+            resetUserInfo
+        }
+    )(WrapLoginForm)
+)
+
+
+
+//export default withRouter(WrapLoginForm);
+
 
 
 

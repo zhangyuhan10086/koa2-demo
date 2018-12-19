@@ -4,9 +4,9 @@ import "./router.scss";
 import { NavLink, Route, Switch } from 'react-router-dom';
 import AC from "../../utils/asyncComponent"
 import _axios from '../../utils/_axios'
-
+import { connect } from 'react-redux';
 import { Avatar, Popover, message } from 'antd';
-import { getUser, clearAllCookie } from "../../utils/common"
+import { isLogin, clearAllCookie } from "../../utils/common"
 
 const content = (e) => {
     return (
@@ -50,9 +50,10 @@ class App extends React.Component {
                     path: "/appearance"
                 },
             ],
-            userInfo: getUser() || {},
+
             imgDomain: sessionStorage.getItem("imgDomain") || '',
-            contentMinH: ''
+            contentMinH: '',
+            isLogin: isLogin()
         }
     }
 
@@ -67,30 +68,38 @@ class App extends React.Component {
             ],
         })
     }
-    goOtherPage(path) {
-
+    //去登录页面
+    toLoginPage = () => {
+        this.props.history.push(`/login`);
     }
+    //到个人设置页面
     toSetting = () => {
         this.props.history.push(`/setting`);
     }
+    //登出
     async logoOut() {
         clearAllCookie();
         message.success('登出成功');
+        setTimeout(() => {
+            window.location.reload();
+        }, 400)
     }
+
     componentWillMount() {
 
     }
     componentDidMount() {
         this.setState({
-            contentMinH: document.documentElement.clientHeight - 60 - 107
-        })
+            contentMinH: document.documentElement.clientHeight - 107
+        });
     }
     render() {
-        const { navList } = this.state
+        const { navList, isLogin } = this.state
+        const { userInfo } = this.props;
         return (
             <div>
                 <div className="header" >
-                    {this.state.userInfo.roleCode == 110 ? <div className="console" onClick={this.openConsole} ></div> : null}
+                    {userInfo.roleCode == 110 ? <div className="console" onClick={this.openConsole} ></div> : null}
                     <div className="header_inner">
                         <div className="header_left" >
                             {
@@ -103,15 +112,20 @@ class App extends React.Component {
                                 ))
                             }
                         </div>
-                        <div className="hearder_right">
-                            <Popover placement="bottom" content={content(this)}>
-                                <Avatar
-                                    size="large"
-                                    src={this.state.imgDomain + this.state.userInfo.portraitUrl}
-                                    style={{ cursor: "pointer" }}
-                                />
-                            </Popover>
-                        </div>
+                        {isLogin ?
+                            <div className="hearder_right"  >
+                                <Popover placement="bottom" content={content(this)}>
+                                    <Avatar
+                                        size="large"
+                                        src={this.state.imgDomain + userInfo.portraitUrl}
+                                        style={{ cursor: "pointer" }}
+                                    />
+                                </Popover>
+                            </div> :
+                            <div className="hearder_right">
+                                <div className="login_btn" onClick={this.toLoginPage} >登录</div>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="content" style={{ minHeight: this.state.contentMinH }} >
@@ -142,4 +156,10 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default connect(
+    state => {
+        return {
+            userInfo: state.userInfo
+        }
+    },
+)(App);

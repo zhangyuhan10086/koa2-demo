@@ -17,7 +17,7 @@ html body {
     z-index: 1000;
 
     .console {
-        position: relative;
+        position: absolute;
         left: 0;
         top: 0;
         width: 20px;
@@ -56,6 +56,14 @@ html body {
                     width: 100%;
                 }
             }
+
+            .login_btn {
+                cursor: pointer;
+
+                &:hover {
+                    color: #ff6fa2;
+                }
+            }
         }
     }
 }
@@ -67,7 +75,8 @@ html body {
 .user_menu_list_router {
     .menu_item {
         cursor: pointer;
-        padding:5px 0;
+        padding: 5px 0;
+
         &:hover {
             color: $red;
         }

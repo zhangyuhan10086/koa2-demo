@@ -10,7 +10,8 @@ const {
     getAllUsers,
     registerUser,
     checkPassword,
-    upDateUser
+    upDateUser,
+    getUserData
 } = require("../service/user");
 
 @Controller("/api/user")
@@ -66,11 +67,7 @@ export default class UserController {
         } = data;
         if (match) {
             let userItem = {
-                _id: user._id,
-                username: user.username,
-                nickname: user.nickname,
-                portraitUrl: user.portraitUrl,
-                roleCode: user.roleCode,
+                ...user._doc
             }
             ctx.session.user = userItem
             ctx.body = {
@@ -99,13 +96,41 @@ export default class UserController {
             sex
         } = ctx.request.body;
         const id = ctx.session.user._id;
-        console.log( id )
         try {
             const res = await upDateUser(id, headerImg, nickName, sex);
             ctx.body = {
                 success: true,
                 result: "",
                 remark: "修改成功"
+            }
+        } catch (err) {
+            ctx.body = {
+                success: false,
+                remark: err,
+                result: ""
+            }
+        }
+    }
+
+    //修改
+    @Get("/userInfo")
+    @Auth
+    async getUserInfo(ctx, next) {
+        const id = ctx.session.user._id;
+        try {
+            const res = await getUserData(id);
+            if (res) {
+                ctx.body = {
+                    success: true,
+                    result: res,
+                    remark: "获取成功"
+                }
+            } else {
+                ctx.body = {
+                    success: false,
+                    result: "",
+                    remark: "没有该用户"
+                }
             }
         } catch (err) {
             ctx.body = {

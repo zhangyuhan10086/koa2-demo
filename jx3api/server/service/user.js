@@ -69,3 +69,15 @@ export const upDateUser = async (id, headerImg, nickName, sex) => {
     });
 
 }
+
+export const getUserData = async (id) => {
+    const user = await User.find({
+        _id:id
+    })
+    if (!user || user.length == 0) {
+        return false;
+    } else {
+        return user[0]
+    }
+
+}

@@ -6,13 +6,13 @@ import ReactDOM from 'react-dom';
 import AC from "./utils/asyncComponent"
 import _axios from './utils/_axios'
 import "./normalize.css";
-
+import {Provider} from 'react-redux';
+import store from './store/store';
 
 import {
     HashRouter,Route,Switch
 } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-
 
 
 import 'antd/dist/antd.css';
@@ -38,6 +38,10 @@ const rootElement=document.getElementById("app");
         console.log(err)
     }
 })();
+
+
+
+
 //设置一个全局的图片域名
 const imgDomain="http://piy3e9xq1.bkt.clouddn.com/";
 sessionStorage.setItem("imgDomain",imgDomain)
@@ -47,13 +51,15 @@ sessionStorage.setItem("imgDomain",imgDomain)
 
 
 ReactDOM.render(
-    <HashRouter>
-        <Switch>
-            <Login path="/login"   component={Login} />
-            <Register path="/register"  component={Register } />
-            <Route path="/" component={App} />
-        </Switch>
-    </HashRouter>, rootElement);
+    <Provider store={store} >
+        <HashRouter>
+            <Switch>
+                <Login path="/login"   component={Login} />
+                <Register path="/register"  component={Register } />
+                <Route path="/" component={App} />
+            </Switch>
+        </HashRouter>
+    </Provider>, rootElement);
 
 serviceWorker.unregister();
 
