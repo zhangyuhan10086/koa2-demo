@@ -16,7 +16,7 @@ export const registerUser = async (username, password) => {
         var userItem = new User({
             username,
             password,
-            portraitUrl: 'https://img.yzcdn.cn/public_files/2018/02/01/5df3bb4b640ddc5efae915b7af90a243.png', //默认头像
+            portraitUrl: 'FpMzqkcl_FO1NipW7yI6TGp0fC5F', //默认头像
             nickname: '默认用户' + Date.now(),
             roleCode: 1, //1就是普通用户
         });
@@ -49,30 +49,22 @@ export const upDateUser = async (id, headerImg, nickName, sex) => {
     let query = {
         _id: id
     };
-    
-    return new Promise(function (resolve, reject) {
-        User.updateOne(query, {
-            $set: {
-                portraitUrl: headerImg,
-                nickname:nickName,
-                sex
-            }
-        }, {
-
-        }, function (err, doc) {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(doc)
-            }
+    try {
+        let res = await User.where(query).updateOne({
+            portraitUrl: headerImg,
+            nickname: nickName,
+            sex,
         });
-    });
+        return res;
+    } catch (err) {
+        return err;
+    }
 
 }
 
 export const getUserData = async (id) => {
     const user = await User.find({
-        _id:id
+        _id: id
     })
     if (!user || user.length == 0) {
         return false;

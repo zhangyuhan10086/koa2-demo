@@ -97,11 +97,11 @@ export default class UserController {
         } = ctx.request.body;
         const id = ctx.session.user._id;
         try {
-            const res = await upDateUser(id, headerImg, nickName, sex);
+            let res= await upDateUser(id, headerImg, nickName, sex);
             ctx.body = {
                 success: true,
                 result: "",
-                remark: "修改成功"
+                remark:res
             }
         } catch (err) {
             ctx.body = {

@@ -91,6 +91,10 @@ export class Publish extends React.Component {
         if (!postData.headerImg) {
             message.warning('头像不能为空');
             return false;
+        };
+        if (!postData.nickName) {
+            message.warning('昵称不能为空');
+            return false;
         }
         this.setState({
             submitLoading: true
@@ -223,7 +227,7 @@ export class Publish extends React.Component {
                                     昵称
                                 </div>
                                 <div className="input_item">
-                                    <Input onChange={e => this.inputChange(e.target.value, 'nickName')} value={formData.nickName} />
+                                    <Input maxLength={8} onChange={e => this.inputChange(e.target.value, 'nickName')} value={formData.nickName} />
                                 </div>
                             </div>
                             <div className="input_item_wrap">

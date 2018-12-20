@@ -64,7 +64,6 @@ userSchema.pre('save', function (next) {
     // })
 })
 userSchema.pre('save', function (next) {
-    console.log("this", this)
     if (this.isNew) {
         this.meta.createdAt = this.meta.updatedAt = Date.now()
     } else {
@@ -72,6 +71,13 @@ userSchema.pre('save', function (next) {
     }
     next()
 })
+userSchema.pre('updateOne', function (next) {
+    this.update({
+        'meta.updatedAt':Date.now()
+    })
+    next()
+})
+
 
 //虚拟字段
 userSchema.virtual("isLocked").get(function () {
