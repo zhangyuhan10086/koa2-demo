@@ -1,9 +1,15 @@
+@import "../../scss/common.scss";
 .discover_page {
+    width: $contentWidth;
+    margin: 0 auto;
+    padding-top: 20px;
+
     .discover_home {
         line-height: 100px;
         text-align: center;
-        img{
-            width:100%;
+
+        img {
+            width: 100%;
         }
     }
 
@@ -20,8 +26,8 @@
         background: #21243a;
         margin-top: 10px;
         padding-top: 20px;
-        padding-left:20px;
-        padding-right:20px;
+        padding-left: 20px;
+        padding-right: 20px;
 
         .player_item {
             display: flex;

@@ -1,5 +1,7 @@
 @import "../../scss/common.scss";
 .home_page {
+    width: $contentWidth;
+    margin: 0 auto;
     .home_header {
         height: 100px;
         text-align: center;
