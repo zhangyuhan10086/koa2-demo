@@ -65,7 +65,7 @@ appearance.pre('save', function (next) {
     next()
 })
 
-userSchema.pre('updateOne', function (next) {
+appearance.pre('updateOne', function (next) {
     this.update({
         'meta.updatedAt':Date.now()
     })
